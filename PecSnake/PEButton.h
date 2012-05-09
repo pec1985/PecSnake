@@ -1,0 +1,13 @@
+//
+//  PEButton.h
+//  Simulator Game
+//
+//  Created by Pedro Enrique on 5/1/12.
+//  Copyright (c) 2012 - pec1985.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface PEButton : UILabel
+
+@end
