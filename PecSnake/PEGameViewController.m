@@ -27,11 +27,14 @@ static NSString *PAUSE_EVENT = @"pause";
 	NSMutableArray *wormArray;
 	WormDirection direction;
 	NSTimer *timer;
+	NSTimer *showExtraCandyTimer;
+	NSTimer *hideExtraCandyTimer;
 	UIView *board1;
 	UIView *board2;
 	UIColor *boardColor;
 	UIColor *boardMargin;
-	UIView *candy;
+	PESquareView *candy;
+	PESquareView *extraCandy;
 	NSInteger numberOfCandy;
 	NSTimeInterval interVal;
 	PERetroAlert *retroAlert;
@@ -39,12 +42,15 @@ static NSString *PAUSE_EVENT = @"pause";
 	CGFloat maxX;
 	int time;
 	int currentScore;
+	int extraScore;
 	BOOL isPaused;
 }
 
 -(void)resetCandy;
 -(UIView *)candy;
+-(PESquareView *)extraCandy;
 -(void)addWormPiece;
+-(void)extraCandyTimers;
 
 @end
 
@@ -65,6 +71,7 @@ static NSString *PAUSE_EVENT = @"pause";
 		interVal = 0.1f;
 		time = 1;
 		currentScore = 0;
+		extraScore = 0;
 		isPaused = NO;
     }
     return self;
@@ -84,6 +91,8 @@ static NSString *PAUSE_EVENT = @"pause";
 		if([lastWorm isEqual:w] == NO && CGPointEqualToPoint([w center], point))
 		{
 			[timer invalidate];
+			[showExtraCandyTimer invalidate];
+			[hideExtraCandyTimer invalidate];
 			retroAlert = [[PERetroAlert alloc] initWithTitle:@"game over" message:@"HA HA! Sucker!" buttonNames:[NSArray arrayWithObject:@"end"] inView:[self view]];
 			[retroAlert setDelegate:self];
 			[retroAlert show];
@@ -101,7 +110,7 @@ static NSString *PAUSE_EVENT = @"pause";
 			[dateFormatter setDateFormat: @"MM-dd-yy"];
 			NSString *dateString = [dateFormatter stringFromDate: localDate];
 
-			NSDictionary *sc = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:time*currentScore],@"score",[NSNumber numberWithInt:time],@"time", dateString, @"date", nil];
+			NSDictionary *sc = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:[self finalScore]],@"score",[NSNumber numberWithInt:time],@"time", dateString, @"date", nil];
 			
 			[ar addObject:sc];
 			
@@ -117,7 +126,14 @@ static NSString *PAUSE_EVENT = @"pause";
 		[self addWormPiece];
 		[self resetCandy];
 	}
-	
+
+	if([extraCandy isHidden] == NO && CGPointEqualToPoint([extraCandy center], [lastWorm center]))
+	{
+		[extraCandy setHidden:YES];
+		extraScore += 100;
+		[self updateScore];
+	}
+
 }
 -(void)moveLeft
 {
@@ -172,7 +188,7 @@ static NSString *PAUSE_EVENT = @"pause";
 	}
 }
 
--(UIView *)candy
+-(PESquareView *)candy
 {
 	if(candy == nil)
 	{
@@ -183,11 +199,78 @@ static NSString *PAUSE_EVENT = @"pause";
 	return candy;
 }
 
+-(void)resetExtraCandy
+{
+	CGPoint center = CGPointMake( ((arc4random()%29)*10)+5, ((arc4random()%39)*10)+5);
+	for(PESquareView *w in wormArray)
+	{
+		if(CGPointEqualToPoint(center, [w center]))
+		{
+			[self resetExtraCandy];
+			return;
+		}
+	}
+	if(CGPointEqualToPoint(center, [candy center]))
+	{
+		[self resetExtraCandy];
+		return;
+	}
+	[extraCandy setCenter:center];
+}
+
+-(void)extraCandyTimers
+{
+
+	if(showExtraCandyTimer && [showExtraCandyTimer isValid])
+		[showExtraCandyTimer invalidate];
+	if(hideExtraCandyTimer && [hideExtraCandyTimer isValid])
+		[hideExtraCandyTimer invalidate];
+
+	showExtraCandyTimer = [[NSTimer scheduledTimerWithTimeInterval:5.0
+																target: self
+															  selector:@selector(showExtraCandy:)
+															  userInfo:self
+															   repeats:YES] retain];
+	hideExtraCandyTimer = [[NSTimer scheduledTimerWithTimeInterval:20.0
+															target: self
+															selector:@selector(hideExtraCandy:)
+															userInfo:self
+															repeats:YES] retain];
+}
+
+-(PESquareView *)extraCandy
+{
+	if(extraCandy == nil)
+	{
+		extraCandy = [[PESquareView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+		[extraCandy setBackgroundColor:[UIColor greenColor]];
+		[extraCandy setHidden:YES];
+		[gameRoom addSubview:extraCandy];
+	}
+
+	[self resetExtraCandy];
+	[self extraCandyTimers];
+	return extraCandy;
+}
+
+-(void)hideExtraCandy:(id)sender
+{
+	NSLog(@" --- hideExtraCandy --- ");
+	[extraCandy setHidden:YES];
+}
+
+-(void)showExtraCandy:(id)sender
+{
+	NSLog(@" --- showExtraCandy --- ");
+	[extraCandy setHidden:NO];
+	[self resetExtraCandy];
+}
+
 -(void)startTimer
 {
 	if(timer && [timer isValid])
 		[timer invalidate];
-	timer = [[NSTimer scheduledTimerWithTimeInterval:interVal target: self selector:@selector(moveWorm) userInfo:self repeats:true] retain];
+	timer = [[NSTimer scheduledTimerWithTimeInterval:interVal target: self selector:@selector(moveWorm) userInfo:self repeats:YES] retain];
 }
 
 -(PESquareView *)wormPiece
@@ -219,6 +302,27 @@ static NSString *PAUSE_EVENT = @"pause";
 	}
 }
 
+-(int)finalScore
+{
+	return (time*currentScore) + extraScore;
+}
+
+-(void)updateScore
+{
+	if(currentScore == 0)
+		currentScore = [wormArray count];
+	
+	[scoreLabel setText:[NSString stringWithFormat:@"SCORE: %i", [self finalScore]]];
+	[speedLabel setText:[NSString stringWithFormat:@"SPEED: %i", time]];
+	[speedLabel sizeToFit];
+	[scoreLabel sizeToFit];
+	
+	CGRect scoreFrame = [scoreLabel frame];
+	CGRect speedFrame = [speedLabel frame];
+	speedFrame.origin.x = scoreFrame.origin.x+scoreFrame.size.width+10;
+	[speedLabel setFrame:speedFrame];
+	currentScore ++;
+}
 
 -(void)addWormPiece
 {
@@ -231,27 +335,12 @@ static NSString *PAUSE_EVENT = @"pause";
 	[gameRoom addSubview:newSquare];
 	
 	[newSquare release];
-
-	if(currentScore == 0)
-		currentScore = [wormArray count];
-			
-	[scoreLabel setText:[NSString stringWithFormat:@"SCORE: %i", (time*currentScore)]];
-	[speedLabel setText:[NSString stringWithFormat:@"SPEED: %i", time]];
-	[speedLabel sizeToFit];
-	[scoreLabel sizeToFit];
-	
-	CGRect scoreFrame = [scoreLabel frame];
-	CGRect speedFrame = [speedLabel frame];
-	speedFrame.origin.x = scoreFrame.origin.x+scoreFrame.size.width+10;
-	[speedLabel setFrame:speedFrame];
-	currentScore ++;
+	[self updateScore];
 }
 
 -(void)createWormWithLength:(NSInteger)num
 {
-
 	CGPoint center = CGPointMake( ((arc4random()%29)*10)+5, ((arc4random()%39)*10)+5);
-///	CGPoint center = CGPointMake(5,5);
 	for(int i = 0; i < num; i++)
 	{
 		PESquareView *sq = [self wormPiece];
@@ -285,11 +374,13 @@ static NSString *PAUSE_EVENT = @"pause";
 {
 	RELEASE_TO_NIL(retroAlert);
 	if([title isEqualToString:@"continue"] || [title isEqualToString:@"go"])
+	{
 		[self startTimer];
+		[self extraCandyTimers];
+	}
 	if([title isEqualToString:@"end"])
 		[self dismissModalViewControllerAnimated:YES];
 	isPaused = NO;
-	
 }
 
 -(void)pauseClicked
@@ -303,6 +394,8 @@ static NSString *PAUSE_EVENT = @"pause";
 	[buttonNames release];
 	buttonNames = nil;
 	[timer invalidate];
+	[showExtraCandyTimer invalidate];
+	[hideExtraCandyTimer invalidate];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -335,7 +428,7 @@ static NSString *PAUSE_EVENT = @"pause";
 	
 	[self createWormWithLength:1];
 	[self resetCandy];
-
+	extraCandy = [self extraCandy];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pauseClicked) name:PAUSE_EVENT object:nil];
 
 
@@ -372,12 +465,14 @@ static NSString *PAUSE_EVENT = @"pause";
 
 -(void)dealloc
 {
+	NSLog(@"dealloc");
 	for(UIView *v in wormArray)
 		[v removeFromSuperview];
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[wormArray removeAllObjects];
 
+	RELEASE_TO_NIL(extraCandy);	
 	RELEASE_TO_NIL(wormArray);
 	RELEASE_TO_NIL(candy);
 	RELEASE_TO_NIL(gameRoom);	
@@ -389,3 +484,85 @@ static NSString *PAUSE_EVENT = @"pause";
 }
 
 @end
+
+
+
+/*
+ 
+ - (void)swipeLeft
+ {
+ if(direction != WormDirectionRight)
+ direction = WormDirectionLeft;
+ }
+ 
+ - (void)swipeRight
+ {
+ if(direction != WormDirectionLeft)
+ direction = WormDirectionRight;
+ }
+ - (void)swipeUp
+ {
+ if(direction != WormDirectionBottom)
+ direction = WormDirectionTop;
+ }
+ 
+ - (void)swipeDown
+ {
+ if(direction != WormDirectionTop)
+ direction = WormDirectionBottom;
+ }
+ 
+ - (IBAction)panGesture:(UIPanGestureRecognizer *)gestureRecognizer {
+ 
+ CGPoint sPoint = [gestureRecognizer translationInView:[gestureRecognizer view]];
+ 
+ WormDirection _direction;
+ 
+ CGPoint newPoint = CGPointMake(currentPoint.x-sPoint.x, currentPoint.y-sPoint.y);
+ 
+ if(newPoint.y > newPoint.x && newPoint.y > 10)
+ {
+ _direction = WormDirectionTop;	
+ } else
+ 
+ if(newPoint.y > newPoint.x && newPoint.x < -10)
+ {
+ _direction = WormDirectionRight;
+ } else
+ 
+ if(newPoint.y < newPoint.x && newPoint.y < -10)
+ {
+ _direction = WormDirectionBottom;
+ } else
+ 
+ if(newPoint.y < newPoint.x && newPoint.x > 10)
+ {
+ _direction = WormDirectionLeft;
+ }
+ currentPoint = sPoint;
+ 
+ 
+ 
+ switch (_direction) {
+ case WormDirectionTop:
+ [pause setText:@"Top"];
+ [self swipeUp];
+ break;
+ case WormDirectionRight:
+ [pause setText:@"Right"];
+ [self swipeRight];
+ break;
+ case WormDirectionBottom:
+ [pause setText:@"Bottom"];
+ [self swipeDown];
+ break;
+ case WormDirectionLeft:
+ [pause setText:@"Left"];
+ [self swipeLeft];
+ break;
+ }
+ 
+ }
+ 
+
+ */

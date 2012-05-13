@@ -17,7 +17,6 @@
 	{
 		score = [[PELabel alloc] init];
 		[score setBackgroundColor:[UIColor clearColor]];
-//		[score setTextAlignment:UITextAlignmentLeft];
 		[[self contentView] addSubview:score];
 	}
 	return score;
@@ -29,7 +28,6 @@
 	{
 		speed = [[PELabel alloc] init];
 		[speed setBackgroundColor:[UIColor clearColor]];
-//		[speed setTextAlignment:UITextAlignmentLeft];
 		[[self contentView] addSubview:speed];
 	}
 	return speed;
@@ -41,7 +39,6 @@
 	{
 		date = [[PELabel alloc] init];
 		[date setBackgroundColor:[UIColor clearColor]];
-//		[date setTextAlignment:UITextAlignmentLeft];
 		[[self contentView] addSubview:date];
 	}
 	return date;

@@ -31,17 +31,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	[table setAllowsSelection:NO];
 	NSMutableArray *temp = [[[NSUserDefaults standardUserDefaults] objectForKey:@"game_scores"] mutableCopy];	
-	NSSortDescriptor *mySorter = [[NSSortDescriptor alloc] initWithKey:@"score" ascending:YES];
+	NSSortDescriptor *mySorter = [[NSSortDescriptor alloc] initWithKey:@"score" ascending:NO];
+	
 	[temp sortUsingDescriptors:[NSArray arrayWithObject:mySorter]];
-	NSMutableArray *temp2 = [[NSMutableArray alloc] initWithCapacity:20];
-	[temp2 addObjectsFromArray:temp];
-	allData = [temp2 copy];
+	
+	allData = [temp copy];
 	[[self table] setDataSource:self];
 	[[self table] setDelegate:self];
 	[[self table] reloadData];
 	[temp release];
-	[temp2 release];
 	[mySorter release];
 }
 
@@ -66,7 +66,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 {
-	return [allData count];
+	return [allData count] > 20 ? 20 : [allData count];
 }
 
 -(PETableviewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

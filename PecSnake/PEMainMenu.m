@@ -59,9 +59,11 @@
 	PEGameViewController *a = [[PEGameViewController alloc] init];
 	[a setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
 	[a startGame];
+//	[self presentModalViewController:a animated:NO];
 	[self presentViewController:a animated:YES completion:^{
-		[a autorelease];
+//		[a autorelease];
 	}];
+	[a release];
 }
 - (IBAction)gameCredits:(id)sender {
 	comingSoon = [[PERetroAlert alloc] initWithTitle:@"coming soon" message:@"meh" buttonNames:[NSArray arrayWithObject:@"ok"] inView:[self view]];
