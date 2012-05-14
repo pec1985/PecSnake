@@ -12,6 +12,7 @@
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBUILabel</string>
+			<string>IBUITapGestureRecognizer</string>
 			<string>IBUIView</string>
 			<string>IBUISwipeGestureRecognizer</string>
 			<string>IBProxyObject</string>
@@ -57,10 +58,10 @@
 							<object class="IBUILabel" id="292366659">
 								<reference key="NSNextResponder" ref="789883695"/>
 								<int key="NSvFlags">294</int>
-								<string key="NSFrame">{{20, 10}, {47, 21}}</string>
+								<string key="NSFrame">{{20, 10}, {225, 21}}</string>
 								<reference key="NSSuperview" ref="789883695"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="828745640"/>
+								<reference key="NSNextKeyView" ref="839202544"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -89,37 +90,6 @@
 								</object>
 								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
-							<object class="IBUILabel" id="828745640">
-								<reference key="NSNextResponder" ref="789883695"/>
-								<int key="NSvFlags">294</int>
-								<string key="NSFrame">{{75, 10}, {47, 21}}</string>
-								<reference key="NSSuperview" ref="789883695"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="839202544"/>
-								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<bool key="IBUIOpaque">NO</bool>
-								<bool key="IBUIClipsSubviews">YES</bool>
-								<bool key="IBUIUserInteractionEnabled">NO</bool>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<string key="IBUIText">speed</string>
-								<reference key="IBUITextColor" ref="792583819"/>
-								<nil key="IBUIHighlightedColor"/>
-								<int key="IBUIBaselineAdjustment">0</int>
-								<float key="IBUIMinimumFontSize">10</float>
-								<int key="IBUILineBreakMode">0</int>
-								<object class="IBUIFontDescription" key="IBUIFontDescription">
-									<string key="name">DBLCDTempBlack</string>
-									<string key="family">DB LCD Temp</string>
-									<int key="traits">2</int>
-									<double key="pointSize">20</double>
-								</object>
-								<object class="NSFont" key="IBUIFont">
-									<string key="NSName">DBLCDTempBlack</string>
-									<double key="NSSize">20</double>
-									<int key="NSfFlags">16</int>
-								</object>
-								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
-							</object>
 							<object class="IBUILabel" id="839202544">
 								<reference key="NSNextResponder" ref="789883695"/>
 								<int key="NSvFlags">273</int>
@@ -131,6 +101,7 @@
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<string key="IBUIText">pause</string>
 								<reference key="IBUITextColor" ref="792583819"/>
@@ -186,6 +157,7 @@
 				<bool key="IBUIDelaysTouchesEnded">NO</bool>
 				<int key="IBUIDirection">2</int>
 			</object>
+			<object class="IBUITapGestureRecognizer" id="84335313"/>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
@@ -212,14 +184,6 @@
 						<reference key="destination" ref="292366659"/>
 					</object>
 					<int key="connectionID">29</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">speedLabel</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="828745640"/>
-					</object>
-					<int key="connectionID">30</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
@@ -278,6 +242,16 @@
 					<int key="connectionID">25</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
+						<string key="label">gestureRecognizers</string>
+						<reference key="source" ref="789883695"/>
+						<reference key="destination" ref="84335313"/>
+						<string key="cachedDesigntimeCollectionClassName">NSArray</string>
+						<bool key="addsContentToExistingCollection">YES</bool>
+					</object>
+					<int key="connectionID">36</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">swipeRight:</string>
 						<reference key="source" ref="37071164"/>
@@ -291,7 +265,7 @@
 						<reference key="source" ref="351447030"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
-					<int key="connectionID">12</int>
+					<int key="connectionID">41</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -307,7 +281,15 @@
 						<reference key="source" ref="947189446"/>
 						<reference key="destination" ref="372490531"/>
 					</object>
-					<int key="connectionID">18</int>
+					<int key="connectionID">40</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">pauseClicked:</string>
+						<reference key="source" ref="84335313"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">38</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -350,7 +332,6 @@
 						<reference key="object" ref="789883695"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="839202544"/>
-							<reference ref="828745640"/>
 							<reference ref="292366659"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
@@ -386,14 +367,14 @@
 						<reference key="parent" ref="789883695"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">27</int>
-						<reference key="object" ref="828745640"/>
-						<reference key="parent" ref="789883695"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">28</int>
 						<reference key="object" ref="839202544"/>
 						<reference key="parent" ref="789883695"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">35</int>
+						<reference key="object" ref="84335313"/>
+						<reference key="parent" ref="0"/>
 					</object>
 				</array>
 			</object>
@@ -408,10 +389,9 @@
 				<string key="16.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="26.CustomClassName">PELabel</string>
 				<string key="26.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="27.CustomClassName">PELabel</string>
-				<string key="27.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="28.CustomClassName">PELabel</string>
 				<string key="28.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="35.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.CustomClassName">PESquareView</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="5.CustomClassName">PESquareView</string>
@@ -422,7 +402,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">32</int>
+			<int key="maxID">41</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -434,7 +414,6 @@
 						<string key="pause">PELabel</string>
 						<string key="scoreLabel">PELabel</string>
 						<string key="scoreView">PESquareView</string>
-						<string key="speedLabel">PELabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="gameRoom">
@@ -452,10 +431,6 @@
 						<object class="IBToOneOutletInfo" key="scoreView">
 							<string key="name">scoreView</string>
 							<string key="candidateClassName">PESquareView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="speedLabel">
-							<string key="name">speedLabel</string>
-							<string key="candidateClassName">PELabel</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

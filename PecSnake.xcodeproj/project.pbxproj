@@ -29,6 +29,7 @@
 		B67A97621552DB5100EFCF45 /* appicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B67A97601552DB5100EFCF45 /* appicon@2x.png */; };
 		B67A97681552DCBC00EFCF45 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B67A97671552DCBC00EFCF45 /* Default.png */; };
 		B67A976A1552DCC400EFCF45 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B67A97691552DCC400EFCF45 /* Default@2x.png */; };
+		B6A99442156081AA004576B8 /* PEScores.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A99441156081AA004576B8 /* PEScores.m */; };
 		B6B9F7EE15541CFF007E2DAC /* PEScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B9F7EC15541CFF007E2DAC /* PEScoreViewController.m */; };
 		B6B9F7EF15541CFF007E2DAC /* PEScoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6B9F7ED15541CFF007E2DAC /* PEScoreViewController.xib */; };
 		B6B9F7F615558760007E2DAC /* PETableviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B9F7F515558760007E2DAC /* PETableviewCell.m */; };
@@ -68,6 +69,8 @@
 		B67A97601552DB5100EFCF45 /* appicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "appicon@2x.png"; sourceTree = "<group>"; };
 		B67A97671552DCBC00EFCF45 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		B67A97691552DCC400EFCF45 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		B6A99440156081AA004576B8 /* PEScores.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEScores.h; sourceTree = "<group>"; };
+		B6A99441156081AA004576B8 /* PEScores.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEScores.m; sourceTree = "<group>"; };
 		B6B9F7EB15541CFF007E2DAC /* PEScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEScoreViewController.h; sourceTree = "<group>"; };
 		B6B9F7EC15541CFF007E2DAC /* PEScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEScoreViewController.m; sourceTree = "<group>"; };
 		B6B9F7ED15541CFF007E2DAC /* PEScoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PEScoreViewController.xib; sourceTree = "<group>"; };
@@ -125,6 +128,7 @@
 		B67A970F15524E4300EFCF45 /* PecSnake */ = {
 			isa = PBXGroup;
 			children = (
+				B6A9943E15608184004576B8 /* Game Room */,
 				B67A975D1552D76000EFCF45 /* portada.png */,
 				B67A97591552D0EA00EFCF45 /* TiWebColor.h */,
 				B67A975A1552D0EA00EFCF45 /* TiWebColor.m */,
@@ -134,9 +138,6 @@
 				B67A972A15524E8800EFCF45 /* PESquareView.m */,
 				B67A972B15524E8800EFCF45 /* PELabel.h */,
 				B67A972C15524E8800EFCF45 /* PELabel.m */,
-				B67A972D15524E8800EFCF45 /* PEGameViewController.h */,
-				B67A972E15524E8800EFCF45 /* PEGameViewController.m */,
-				B67A972F15524E8800EFCF45 /* PEGameViewController.xib */,
 				B67A972515524E7F00EFCF45 /* PERetroAlert.h */,
 				B67A972615524E7F00EFCF45 /* PERetroAlert.m */,
 				B67A972315524E7200EFCF45 /* DS-DIGII.TTF */,
@@ -164,6 +165,18 @@
 				B67A971715524E4400EFCF45 /* PecSnake-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B6A9943E15608184004576B8 /* Game Room */ = {
+			isa = PBXGroup;
+			children = (
+				B67A972D15524E8800EFCF45 /* PEGameViewController.h */,
+				B67A972E15524E8800EFCF45 /* PEGameViewController.m */,
+				B67A972F15524E8800EFCF45 /* PEGameViewController.xib */,
+				B6A99440156081AA004576B8 /* PEScores.h */,
+				B6A99441156081AA004576B8 /* PEScores.m */,
+			);
+			name = "Game Room";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -249,6 +262,7 @@
 				B67A975C1552D15300EFCF45 /* TiWebColor.m in Sources */,
 				B6B9F7EE15541CFF007E2DAC /* PEScoreViewController.m in Sources */,
 				B6B9F7F615558760007E2DAC /* PETableviewCell.m in Sources */,
+				B6A99442156081AA004576B8 /* PEScores.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

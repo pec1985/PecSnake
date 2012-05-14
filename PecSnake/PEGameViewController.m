@@ -8,6 +8,7 @@
 
 #import "PEGameViewController.h"
 #import "TiWebColor.h"
+#import "PEScores.h"
 
 typedef enum {
 	WormDirectionLeft,
@@ -23,23 +24,24 @@ static NSString *PAUSE_EVENT = @"pause";
 
 @interface PEGameViewController ()
 {
-    @private
+@private
 	NSMutableArray *wormArray;
 	WormDirection direction;
 	NSTimer *timer;
 	NSTimer *showExtraCandyTimer;
-	NSTimer *hideExtraCandyTimer;
+//	NSTimer *hideExtraCandyTimer;
+	NSTimeInterval interVal;
 	UIView *board1;
 	UIView *board2;
 	UIColor *boardColor;
 	UIColor *boardMargin;
+	PEScores *finalScore;
 	PESquareView *candy;
 	PESquareView *extraCandy;
-	NSInteger numberOfCandy;
-	NSTimeInterval interVal;
 	PERetroAlert *retroAlert;
 	CGFloat maxY;
 	CGFloat maxX;
+	NSInteger numberOfCandy;
 	int time;
 	int currentScore;
 	int extraScore;
@@ -57,7 +59,6 @@ static NSString *PAUSE_EVENT = @"pause";
 @implementation PEGameViewController
 @synthesize scoreView;
 @synthesize scoreLabel;
-@synthesize speedLabel;
 @synthesize gameRoom;
 @synthesize pause;
 
@@ -77,12 +78,112 @@ static NSString *PAUSE_EVENT = @"pause";
     return self;
 }
 
+#pragma mark - View Controller Stuff
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+	finalScore = [[PEScores alloc] init];
+	[[self view] setBackgroundColor:[TiWebColor webColorNamed:@"#333"]];
+	[pause sizeToFit];
+	[scoreLabel setText:[NSString stringWithFormat:@"SCORE: 0    SPEED:  1"]];
+	[scoreLabel setTextAlignment:UITextAlignmentLeft];
+	[scoreView setBackgroundColor:[TiWebColor webColorNamed:@"#333"]];
+	[scoreLabel setBackgroundColor:[TiWebColor webColorNamed:@"#333"]];
+	[pause setBackgroundColor:[TiWebColor webColorNamed:@"#333"]];
+	
+	maxX = gameRoom.frame.size.width - 5;
+	maxY = gameRoom.frame.size.height - 5;
+	
+	[self createWormWithLength:1];
+	[self resetCandy];
+	extraCandy = [self extraCandy];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pauseClicked:) name:PAUSE_EVENT object:nil];
+	
+	
+}
+
+- (void)viewDidUnload
+{
+	[self setScoreView:nil];
+    [super viewDidUnload];
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+-(void)dealloc
+{
+	NSLog(@"dealloc");
+	for(UIView *v in wormArray)
+		[v removeFromSuperview];
+	
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[wormArray removeAllObjects];
+	RELEASE_TO_NIL(finalScore);
+	RELEASE_TO_NIL(extraCandy);	
+	RELEASE_TO_NIL(wormArray);
+	RELEASE_TO_NIL(candy);
+	RELEASE_TO_NIL(gameRoom);	
+	RELEASE_TO_NIL(scoreLabel)
+	RELEASE_TO_NIL(pause)
+	RELEASE_TO_NIL(scoreView)
+	[super dealloc];
+}
+
+#pragma mark - Game Start and End
+
+-(void)startGame
+{
+	if(retroAlert != nil) return;
+	NSArray *buttonNames = [[NSArray alloc] initWithObjects:@"go", nil];
+	retroAlert = [[PERetroAlert alloc] initWithTitle:@"new game" message:@"are you ready?!" buttonNames:buttonNames inView:[self view]];
+	[retroAlert setDelegate:self];
+	[retroAlert show];
+	[buttonNames release];
+	buttonNames = nil;
+}
+
+-(void)endGame
+{
+	[timer invalidate];
+	[showExtraCandyTimer invalidate];
+//	[hideExtraCandyTimer invalidate];
+	retroAlert = [[PERetroAlert alloc] initWithTitle:@"game over" message:@"HA HA! Sucker!" buttonNames:[NSArray arrayWithObject:@"end"] inView:[self view]];
+	[retroAlert setDelegate:self];
+	[retroAlert show];
+	isPaused = YES;	
+	
+	NSUserDefaults *urs = [NSUserDefaults standardUserDefaults];
+	
+	NSMutableArray *ar = [[urs objectForKey:@"game_scores"] mutableCopy];
+	if(!ar)
+		ar = [[NSMutableArray alloc] init];
+	
+	NSDate *localDate = [NSDate date];
+	NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc]init]autorelease];
+	[dateFormatter setDateFormat: @"MM-dd-yy"];
+	NSString *dateString = [dateFormatter stringFromDate: localDate];
+	
+	NSDictionary *sc = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:[finalScore score]],@"score",[NSNumber numberWithInt:time],@"time", dateString, @"date", nil];
+	
+	[ar addObject:sc];
+	
+	[urs setObject:ar forKey:@"game_scores"];
+	[urs synchronize];
+	[ar release];
+}
+
+#pragma mark - Move Worm Directions
+
 -(void)repositionArrayAtPoint:(CGPoint)pt
 {
 	PESquareView *lastWorm = [wormArray lastObject];
-//	[UIView animateWithDuration:0.2 animations:^{
-		[lastWorm setCenter:pt];
-//	}];
+	//	[UIView animateWithDuration:0.2 animations:^{
+	[lastWorm setCenter:pt];
+	//	}];
 	[wormArray removeObject:lastWorm];
 	[wormArray insertObject:lastWorm atIndex:0];
 	CGPoint point = [lastWorm center];
@@ -90,34 +191,8 @@ static NSString *PAUSE_EVENT = @"pause";
 	{
 		if([lastWorm isEqual:w] == NO && CGPointEqualToPoint([w center], point))
 		{
-			[timer invalidate];
-			[showExtraCandyTimer invalidate];
-			[hideExtraCandyTimer invalidate];
-			retroAlert = [[PERetroAlert alloc] initWithTitle:@"game over" message:@"HA HA! Sucker!" buttonNames:[NSArray arrayWithObject:@"end"] inView:[self view]];
-			[retroAlert setDelegate:self];
-			[retroAlert show];
-			isPaused = YES;	
-			currentScore--;
-			
-			NSUserDefaults *urs = [NSUserDefaults standardUserDefaults];
-			
-			NSMutableArray *ar = [[urs objectForKey:@"game_scores"] mutableCopy];
-			if(!ar)
-				ar = [[NSMutableArray alloc] init];
-
-			NSDate *localDate = [NSDate date];
-			NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc]init]autorelease];
-			[dateFormatter setDateFormat: @"MM-dd-yy"];
-			NSString *dateString = [dateFormatter stringFromDate: localDate];
-
-			NSDictionary *sc = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:[self finalScore]],@"score",[NSNumber numberWithInt:time],@"time", dateString, @"date", nil];
-			
-			[ar addObject:sc];
-			
-			[urs setObject:ar forKey:@"game_scores"];
-			[urs synchronize];
-			[ar release];
-			break;
+			[self endGame];
+			return;
 		}	
 	}
 	if(CGPointEqualToPoint([[self candy] center], [lastWorm center]))
@@ -126,15 +201,16 @@ static NSString *PAUSE_EVENT = @"pause";
 		[self addWormPiece];
 		[self resetCandy];
 	}
-
+	
 	if([extraCandy isHidden] == NO && CGPointEqualToPoint([extraCandy center], [lastWorm center]))
 	{
 		[extraCandy setHidden:YES];
-		extraScore += 100;
-		[self updateScore];
+		NSLog(@"%f",[extraCandy alpha] * 100);
+		[self updateScoreWithPoints: 100];
 	}
-
+	
 }
+
 -(void)moveLeft
 {
 	PESquareView *firstWorm = [wormArray objectAtIndex:0];
@@ -142,7 +218,7 @@ static NSString *PAUSE_EVENT = @"pause";
 	point.x -= 10;	
 	if(point.x == -5) point.x = maxX;
 	[self repositionArrayAtPoint:point];
-
+	
 }
 -(void)moveRight
 {
@@ -188,6 +264,37 @@ static NSString *PAUSE_EVENT = @"pause";
 	}
 }
 
+#pragma mark - Worm Stuff
+
+-(void)addWormPiece
+{
+	PESquareView *first = [wormArray lastObject];
+	CGPoint center = [first center];
+	
+	PESquareView *newSquare = [[self wormPiece] retain];
+	[newSquare setCenter:center];
+	[wormArray addObject:newSquare];
+	[gameRoom addSubview:newSquare];
+	
+	[newSquare release];
+	[self updateScoreWithPoints: time];
+}
+
+-(void)createWormWithLength:(NSInteger)num
+{
+	CGPoint center = CGPointMake( ((arc4random()%29)*10)+5, ((arc4random()%39)*10)+5);
+	for(int i = 0; i < num; i++)
+	{
+		PESquareView *sq = [self wormPiece];
+		[sq setCenter:center];
+		[wormArray addObject:sq];
+		[gameRoom addSubview:sq];
+		center.x -= 10;
+	}
+}
+
+#pragma mark - Views, Candies, etc...
+
 -(PESquareView *)candy
 {
 	if(candy == nil)
@@ -198,6 +305,59 @@ static NSString *PAUSE_EVENT = @"pause";
 	}
 	return candy;
 }
+
+-(PESquareView *)extraCandy
+{
+	if(extraCandy == nil)
+	{
+		extraCandy = [[PESquareView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+		[extraCandy setBackgroundColor:[UIColor greenColor]];
+		[extraCandy setHidden:YES];
+		[gameRoom addSubview:extraCandy];
+	}
+	
+	[self resetExtraCandy];
+	[self extraCandyTimers];
+	return extraCandy;
+}
+
+-(PESquareView *)wormPiece
+{
+	PESquareView *a = [[PESquareView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+	[a setBackgroundColor:[UIColor blueColor]];
+	return [a autorelease];
+}
+
+
+#pragma mark - Game Timers
+
+-(void)extraCandyTimers
+{
+	if(showExtraCandyTimer && [showExtraCandyTimer isValid])
+		[showExtraCandyTimer invalidate];
+//	if(hideExtraCandyTimer && [hideExtraCandyTimer isValid])
+//		[hideExtraCandyTimer invalidate];
+	
+	showExtraCandyTimer = [[NSTimer scheduledTimerWithTimeInterval: 10.0
+															target: self
+														  selector: @selector(showExtraCandy:)
+														  userInfo: self
+														   repeats: YES] retain];
+//	hideExtraCandyTimer = [[NSTimer scheduledTimerWithTimeInterval: 5.0/2
+//															target: self
+//														  selector: @selector(hideExtraCandy:)
+//														  userInfo: self
+//														   repeats: YES] retain];
+}
+
+-(void)startTimer
+{
+	if(timer && [timer isValid])
+		[timer invalidate];
+	timer = [[NSTimer scheduledTimerWithTimeInterval:interVal target: self selector:@selector(moveWorm) userInfo:self repeats:YES] retain];
+}
+
+#pragma mark - Extra Candy Stuff
 
 -(void)resetExtraCandy
 {
@@ -218,67 +378,34 @@ static NSString *PAUSE_EVENT = @"pause";
 	[extraCandy setCenter:center];
 }
 
--(void)extraCandyTimers
-{
-
-	if(showExtraCandyTimer && [showExtraCandyTimer isValid])
-		[showExtraCandyTimer invalidate];
-	if(hideExtraCandyTimer && [hideExtraCandyTimer isValid])
-		[hideExtraCandyTimer invalidate];
-
-	showExtraCandyTimer = [[NSTimer scheduledTimerWithTimeInterval:5.0
-																target: self
-															  selector:@selector(showExtraCandy:)
-															  userInfo:self
-															   repeats:YES] retain];
-	hideExtraCandyTimer = [[NSTimer scheduledTimerWithTimeInterval:20.0
-															target: self
-															selector:@selector(hideExtraCandy:)
-															userInfo:self
-															repeats:YES] retain];
-}
-
--(PESquareView *)extraCandy
-{
-	if(extraCandy == nil)
-	{
-		extraCandy = [[PESquareView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
-		[extraCandy setBackgroundColor:[UIColor greenColor]];
-		[extraCandy setHidden:YES];
-		[gameRoom addSubview:extraCandy];
-	}
-
-	[self resetExtraCandy];
-	[self extraCandyTimers];
-	return extraCandy;
-}
 
 -(void)hideExtraCandy:(id)sender
 {
-	NSLog(@" --- hideExtraCandy --- ");
-	[extraCandy setHidden:YES];
+//	NSLog(@"hideExtraCandy");
+//	[extraCandy setHidden:YES];
 }
 
 -(void)showExtraCandy:(id)sender
 {
-	NSLog(@" --- showExtraCandy --- ");
+//	NSLog(@"showExtraCandy");
 	[extraCandy setHidden:NO];
+	
+	[UIView animateWithDuration: 5.0
+					 animations:^{
+						 [extraCandy setAlpha:0.25];
+					 }
+					 completion:^(BOOL complete){
+						 [extraCandy setAlpha:1.0];
+//						 [extraCandy setBackgroundColor:[UIColor greenColor]];
+						 [extraCandy setHidden:YES];
+					 }
+	 ];
+
+	
 	[self resetExtraCandy];
 }
 
--(void)startTimer
-{
-	if(timer && [timer isValid])
-		[timer invalidate];
-	timer = [[NSTimer scheduledTimerWithTimeInterval:interVal target: self selector:@selector(moveWorm) userInfo:self repeats:YES] retain];
-}
-
--(PESquareView *)wormPiece
-{
-	PESquareView *a = [[PESquareView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
-	[a setBackgroundColor:[UIColor blueColor]];
-	return [a autorelease];
-}
+#pragma mark - Normal Candy Stuff
 
 -(void)resetCandy
 {
@@ -302,54 +429,17 @@ static NSString *PAUSE_EVENT = @"pause";
 	}
 }
 
--(int)finalScore
+#pragma mark - Scores And Points
+
+-(void)updateScoreWithPoints:(int)points
 {
-	return (time*currentScore) + extraScore;
+	
+	[finalScore addScore: points];	
+	[scoreLabel setText:[NSString stringWithFormat:@"SCORE: %i    SPEED: %i", [finalScore score], time]];
+	
 }
 
--(void)updateScore
-{
-	if(currentScore == 0)
-		currentScore = [wormArray count];
-	
-	[scoreLabel setText:[NSString stringWithFormat:@"SCORE: %i", [self finalScore]]];
-	[speedLabel setText:[NSString stringWithFormat:@"SPEED: %i", time]];
-	[speedLabel sizeToFit];
-	[scoreLabel sizeToFit];
-	
-	CGRect scoreFrame = [scoreLabel frame];
-	CGRect speedFrame = [speedLabel frame];
-	speedFrame.origin.x = scoreFrame.origin.x+scoreFrame.size.width+10;
-	[speedLabel setFrame:speedFrame];
-	currentScore ++;
-}
-
--(void)addWormPiece
-{
-	PESquareView *first = [wormArray lastObject];
-	CGPoint center = [first center];
-	
-	PESquareView *newSquare = [[self wormPiece] retain];
-	[newSquare setCenter:center];
-	[wormArray addObject:newSquare];
-	[gameRoom addSubview:newSquare];
-	
-	[newSquare release];
-	[self updateScore];
-}
-
--(void)createWormWithLength:(NSInteger)num
-{
-	CGPoint center = CGPointMake( ((arc4random()%29)*10)+5, ((arc4random()%39)*10)+5);
-	for(int i = 0; i < num; i++)
-	{
-		PESquareView *sq = [self wormPiece];
-		[sq setCenter:center];
-		[wormArray addObject:sq];
-		[gameRoom addSubview:sq];
-		center.x -= 10;
-	}
-}
+#pragma mark - User Actions
 
 - (IBAction)swipeLeft:(id)sender {
 	if(direction != WormDirectionRight)
@@ -370,20 +460,7 @@ static NSString *PAUSE_EVENT = @"pause";
 		direction = WormDirectionBottom;
 }
 
--(void)retroAlertDidSelect:(NSString *)title
-{
-	RELEASE_TO_NIL(retroAlert);
-	if([title isEqualToString:@"continue"] || [title isEqualToString:@"go"])
-	{
-		[self startTimer];
-		[self extraCandyTimers];
-	}
-	if([title isEqualToString:@"end"])
-		[self dismissModalViewControllerAnimated:YES];
-	isPaused = NO;
-}
-
--(void)pauseClicked
+-(IBAction)pauseClicked:(id)sender
 {
 	if(isPaused) return;
 	isPaused = YES;	
@@ -395,92 +472,22 @@ static NSString *PAUSE_EVENT = @"pause";
 	buttonNames = nil;
 	[timer invalidate];
 	[showExtraCandyTimer invalidate];
-	[hideExtraCandyTimer invalidate];
+//	[hideExtraCandyTimer invalidate];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+#pragma mark - Alert Delegate
+
+-(void)retroAlertDidSelect:(NSString *)title
 {
-    [super viewWillAppear:animated];
-	[[self view] setBackgroundColor:[TiWebColor webColorNamed:@"#333"]];
-	[pause sizeToFit];
-	UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pauseClicked)];
-	[scoreView addGestureRecognizer:tapGesture];
-	[scoreLabel setText:[NSString stringWithFormat:@"SCORE: %i", 0]];
-	[speedLabel setText:[NSString stringWithFormat:@"SPEED: %i", 1]];
-	[speedLabel sizeToFit];
-	[scoreLabel sizeToFit];
-
-	[scoreView setBackgroundColor:[TiWebColor webColorNamed:@"#333"]];
-	[speedLabel setBackgroundColor:[TiWebColor webColorNamed:@"#333"]];
-	[scoreLabel setBackgroundColor:[TiWebColor webColorNamed:@"#333"]];
-	[pause setBackgroundColor:[TiWebColor webColorNamed:@"#333"]];
-
-	
-	[tapGesture release];
-	
-	CGRect scoreFrame = [scoreLabel frame];
-	CGRect speedFrame = [speedLabel frame];
-	speedFrame.origin.x = scoreFrame.origin.x+scoreFrame.size.width+10;
-	[speedLabel setFrame:speedFrame];
-	
-	maxX = gameRoom.frame.size.width - 5;
-	maxY = gameRoom.frame.size.height - 5;
-	
-	[self createWormWithLength:1];
-	[self resetCandy];
-	extraCandy = [self extraCandy];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pauseClicked) name:PAUSE_EVENT object:nil];
-
-
-}
-
--(void)meh:(id)arg
-{
-	[self pause];
-	NSLog(@"meh %@",arg);
-}
-
-- (void)viewDidUnload
-{
-	[self setScoreView:nil];
-    [super viewDidUnload];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
--(void)startGame
-{
-	if(retroAlert != nil) return;
-	
-	NSArray *buttonNames = [[NSArray alloc] initWithObjects:@"go", nil];
-	retroAlert = [[PERetroAlert alloc] initWithTitle:@"new game" message:@"are you ready?!" buttonNames:buttonNames inView:[self view]];
-	[retroAlert setDelegate:self];
-	[retroAlert show];
-	[buttonNames release];
-	buttonNames = nil;
-}
-
--(void)dealloc
-{
-	NSLog(@"dealloc");
-	for(UIView *v in wormArray)
-		[v removeFromSuperview];
-
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[wormArray removeAllObjects];
-
-	RELEASE_TO_NIL(extraCandy);	
-	RELEASE_TO_NIL(wormArray);
-	RELEASE_TO_NIL(candy);
-	RELEASE_TO_NIL(gameRoom);	
-	RELEASE_TO_NIL(speedLabel)	
-	RELEASE_TO_NIL(scoreLabel)
-	RELEASE_TO_NIL(pause)
-	RELEASE_TO_NIL(scoreView)
-	[super dealloc];
+	RELEASE_TO_NIL(retroAlert);
+	if([title isEqualToString:@"continue"] || [title isEqualToString:@"go"])
+	{
+		[self startTimer];
+		[self extraCandyTimers];
+	}
+	if([title isEqualToString:@"end"])
+		[self dismissModalViewControllerAnimated:YES];
+	isPaused = NO;
 }
 
 @end
@@ -564,5 +571,5 @@ static NSString *PAUSE_EVENT = @"pause";
  
  }
  
-
+ 
  */

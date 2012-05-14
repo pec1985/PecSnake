@@ -15,7 +15,6 @@
 
 @property (retain, nonatomic) IBOutlet PESquareView *scoreView;
 @property (retain, nonatomic) IBOutlet PELabel *scoreLabel;
-@property (retain, nonatomic) IBOutlet PELabel *speedLabel;
 @property (retain, nonatomic) IBOutlet PESquareView *gameRoom;
 @property (retain, nonatomic) IBOutlet PELabel *pause;
 
