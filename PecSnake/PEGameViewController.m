@@ -26,10 +26,11 @@ static NSString *PAUSE_EVENT = @"pause";
 {
 @private
 	NSMutableArray *wormArray;
+	AVAudioPlayer *sound1;
+	AVAudioPlayer *sound2;
+	AVAudioPlayer *sound3;
 	WormDirection direction;
 	NSTimer *timer;
-	NSTimer *showExtraCandyTimer;
-//	NSTimer *hideExtraCandyTimer;
 	NSTimeInterval interVal;
 	UIView *board1;
 	UIView *board2;
@@ -52,7 +53,7 @@ static NSString *PAUSE_EVENT = @"pause";
 -(UIView *)candy;
 -(PESquareView *)extraCandy;
 -(void)addWormPiece;
--(void)extraCandyTimers;
+-(void)showExtraCandy:(id)sender;
 
 @end
 
@@ -61,6 +62,55 @@ static NSString *PAUSE_EVENT = @"pause";
 @synthesize scoreLabel;
 @synthesize gameRoom;
 @synthesize pause;
+@synthesize flashView;
+
+-(void)playSound1
+{
+	if(sound1 == nil)
+	{
+		NSString *a = [[NSBundle mainBundle] resourcePath];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/laser1.wav",a]];
+		NSError *err = nil;
+		sound1 = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:(NSError **)&err];
+		if(err != nil)
+		{
+			NSLog(@"%@",[err description]);
+		}
+	}
+	[sound1 performSelectorInBackground:@selector(play) withObject:nil];
+}
+
+-(void)playSound2
+{
+	if(sound2 == nil)
+	{
+		NSString *a = [[NSBundle mainBundle] resourcePath];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/laser2.wav",a]];
+		NSError *err = nil;
+		sound2 = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:(NSError **)&err];
+		if(err != nil)
+		{
+			NSLog(@"%@",[err description]);
+		}
+	}
+	[sound2 performSelectorInBackground:@selector(play) withObject:nil];
+}
+
+-(void)playSound3
+{
+	if(sound3 == nil)
+	{
+		NSString *a = [[NSBundle mainBundle] resourcePath];
+		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/boing.wav",a]];
+		NSError *err = nil;
+		sound3 = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:(NSError **)&err];
+		if(err != nil)
+		{
+			NSLog(@"%@",[err description]);
+		}
+	}
+	[sound3 performSelectorInBackground:@selector(play) withObject:nil];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -106,6 +156,7 @@ static NSString *PAUSE_EVENT = @"pause";
 - (void)viewDidUnload
 {
 	[self setScoreView:nil];
+	[self setFlashView:nil];
     [super viewDidUnload];
 }
 
@@ -122,14 +173,18 @@ static NSString *PAUSE_EVENT = @"pause";
 	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[wormArray removeAllObjects];
-	RELEASE_TO_NIL(finalScore);
-	RELEASE_TO_NIL(extraCandy);	
-	RELEASE_TO_NIL(wormArray);
-	RELEASE_TO_NIL(candy);
-	RELEASE_TO_NIL(gameRoom);	
+	RELEASE_TO_NIL(finalScore)
+	RELEASE_TO_NIL(extraCandy)	
+	RELEASE_TO_NIL(wormArray)
+	RELEASE_TO_NIL(candy)
+	RELEASE_TO_NIL(gameRoom)	
 	RELEASE_TO_NIL(scoreLabel)
 	RELEASE_TO_NIL(pause)
 	RELEASE_TO_NIL(scoreView)
+	RELEASE_TO_NIL(flashView)
+	RELEASE_TO_NIL(sound1)
+	RELEASE_TO_NIL(sound2)
+	RELEASE_TO_NIL(sound3)
 	[super dealloc];
 }
 
@@ -149,8 +204,6 @@ static NSString *PAUSE_EVENT = @"pause";
 -(void)endGame
 {
 	[timer invalidate];
-	[showExtraCandyTimer invalidate];
-//	[hideExtraCandyTimer invalidate];
 	retroAlert = [[PERetroAlert alloc] initWithTitle:@"game over" message:@"HA HA! Sucker!" buttonNames:[NSArray arrayWithObject:@"end"] inView:[self view]];
 	[retroAlert setDelegate:self];
 	[retroAlert show];
@@ -174,6 +227,7 @@ static NSString *PAUSE_EVENT = @"pause";
 	[urs setObject:ar forKey:@"game_scores"];
 	[urs synchronize];
 	[ar release];
+	[self playSound3];
 }
 
 #pragma mark - Move Worm Directions
@@ -181,9 +235,7 @@ static NSString *PAUSE_EVENT = @"pause";
 -(void)repositionArrayAtPoint:(CGPoint)pt
 {
 	PESquareView *lastWorm = [wormArray lastObject];
-	//	[UIView animateWithDuration:0.2 animations:^{
 	[lastWorm setCenter:pt];
-	//	}];
 	[wormArray removeObject:lastWorm];
 	[wormArray insertObject:lastWorm atIndex:0];
 	CGPoint point = [lastWorm center];
@@ -197,6 +249,7 @@ static NSString *PAUSE_EVENT = @"pause";
 	}
 	if(CGPointEqualToPoint([[self candy] center], [lastWorm center]))
 	{
+		[self playSound1];
 		numberOfCandy ++;
 		[self addWormPiece];
 		[self resetCandy];
@@ -204,9 +257,20 @@ static NSString *PAUSE_EVENT = @"pause";
 	
 	if([extraCandy isHidden] == NO && CGPointEqualToPoint([extraCandy center], [lastWorm center]))
 	{
+		[self playSound2];
 		[extraCandy setHidden:YES];
-		NSLog(@"%f",[extraCandy alpha] * 100);
-		[self updateScoreWithPoints: 100];
+		[self updateScoreWithPoints: time * 25];
+		[flashView setHidden:NO];
+		[UIView animateWithDuration: 0.35f
+						 animations:^{
+							 [flashView setAlpha:0];
+						 }
+						 completion:^(BOOL completetion){
+							 [flashView setHidden:YES];
+							 [flashView setAlpha:1.0];
+						 }
+		 ];
+		
 	}
 	
 }
@@ -311,13 +375,12 @@ static NSString *PAUSE_EVENT = @"pause";
 	if(extraCandy == nil)
 	{
 		extraCandy = [[PESquareView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
-		[extraCandy setBackgroundColor:[UIColor greenColor]];
+		[extraCandy setBackgroundColor:[UIColor yellowColor]];
 		[extraCandy setHidden:YES];
 		[gameRoom addSubview:extraCandy];
 	}
 	
 	[self resetExtraCandy];
-	[self extraCandyTimers];
 	return extraCandy;
 }
 
@@ -330,25 +393,6 @@ static NSString *PAUSE_EVENT = @"pause";
 
 
 #pragma mark - Game Timers
-
--(void)extraCandyTimers
-{
-	if(showExtraCandyTimer && [showExtraCandyTimer isValid])
-		[showExtraCandyTimer invalidate];
-//	if(hideExtraCandyTimer && [hideExtraCandyTimer isValid])
-//		[hideExtraCandyTimer invalidate];
-	
-	showExtraCandyTimer = [[NSTimer scheduledTimerWithTimeInterval: 10.0
-															target: self
-														  selector: @selector(showExtraCandy:)
-														  userInfo: self
-														   repeats: YES] retain];
-//	hideExtraCandyTimer = [[NSTimer scheduledTimerWithTimeInterval: 5.0/2
-//															target: self
-//														  selector: @selector(hideExtraCandy:)
-//														  userInfo: self
-//														   repeats: YES] retain];
-}
 
 -(void)startTimer
 {
@@ -379,15 +423,8 @@ static NSString *PAUSE_EVENT = @"pause";
 }
 
 
--(void)hideExtraCandy:(id)sender
-{
-//	NSLog(@"hideExtraCandy");
-//	[extraCandy setHidden:YES];
-}
-
 -(void)showExtraCandy:(id)sender
 {
-//	NSLog(@"showExtraCandy");
 	[extraCandy setHidden:NO];
 	
 	[UIView animateWithDuration: 5.0
@@ -396,7 +433,6 @@ static NSString *PAUSE_EVENT = @"pause";
 					 }
 					 completion:^(BOOL complete){
 						 [extraCandy setAlpha:1.0];
-//						 [extraCandy setBackgroundColor:[UIColor greenColor]];
 						 [extraCandy setHidden:YES];
 					 }
 	 ];
@@ -426,6 +462,7 @@ static NSString *PAUSE_EVENT = @"pause";
 		time++;
 		[timer invalidate];
 		[self startTimer];
+		[self showExtraCandy:nil];
 	}
 }
 
@@ -471,8 +508,6 @@ static NSString *PAUSE_EVENT = @"pause";
 	[buttonNames release];
 	buttonNames = nil;
 	[timer invalidate];
-	[showExtraCandyTimer invalidate];
-//	[hideExtraCandyTimer invalidate];
 }
 
 #pragma mark - Alert Delegate
@@ -483,7 +518,6 @@ static NSString *PAUSE_EVENT = @"pause";
 	if([title isEqualToString:@"continue"] || [title isEqualToString:@"go"])
 	{
 		[self startTimer];
-		[self extraCandyTimers];
 	}
 	if([title isEqualToString:@"end"])
 		[self dismissModalViewControllerAnimated:YES];

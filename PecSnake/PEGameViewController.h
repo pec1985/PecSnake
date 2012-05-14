@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVAudioPlayer.h>
 #import "PESquareView.h"
 #import "PELabel.h"
 #import "PERetroAlert.h"
@@ -17,6 +18,7 @@
 @property (retain, nonatomic) IBOutlet PELabel *scoreLabel;
 @property (retain, nonatomic) IBOutlet PESquareView *gameRoom;
 @property (retain, nonatomic) IBOutlet PELabel *pause;
+@property (retain, nonatomic) IBOutlet UIView *flashView;
 
 -(void)startGame;
 

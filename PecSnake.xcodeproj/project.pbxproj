@@ -33,6 +33,10 @@
 		B6B9F7EE15541CFF007E2DAC /* PEScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B9F7EC15541CFF007E2DAC /* PEScoreViewController.m */; };
 		B6B9F7EF15541CFF007E2DAC /* PEScoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6B9F7ED15541CFF007E2DAC /* PEScoreViewController.xib */; };
 		B6B9F7F615558760007E2DAC /* PETableviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B9F7F515558760007E2DAC /* PETableviewCell.m */; };
+		B6C032601560BCD300704EF6 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6C0325F1560BCD300704EF6 /* AVFoundation.framework */; };
+		B6C0326D15615B0000704EF6 /* laser1.wav in Resources */ = {isa = PBXBuildFile; fileRef = B6C0326B15615B0000704EF6 /* laser1.wav */; };
+		B6C0326E15615B0000704EF6 /* laser2.wav in Resources */ = {isa = PBXBuildFile; fileRef = B6C0326C15615B0000704EF6 /* laser2.wav */; };
+		B6C0327015615F9700704EF6 /* boing.wav in Resources */ = {isa = PBXBuildFile; fileRef = B6C0326F15615F9700704EF6 /* boing.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +80,10 @@
 		B6B9F7ED15541CFF007E2DAC /* PEScoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PEScoreViewController.xib; sourceTree = "<group>"; };
 		B6B9F7F415558760007E2DAC /* PETableviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PETableviewCell.h; sourceTree = "<group>"; };
 		B6B9F7F515558760007E2DAC /* PETableviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PETableviewCell.m; sourceTree = "<group>"; };
+		B6C0325F1560BCD300704EF6 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		B6C0326B15615B0000704EF6 /* laser1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = laser1.wav; sourceTree = "<group>"; };
+		B6C0326C15615B0000704EF6 /* laser2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = laser2.wav; sourceTree = "<group>"; };
+		B6C0326F15615F9700704EF6 /* boing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = boing.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6C032601560BCD300704EF6 /* AVFoundation.framework in Frameworks */,
 				B67A973715524FBA00EFCF45 /* QuartzCore.framework in Frameworks */,
 				B67A970A15524E4300EFCF45 /* UIKit.framework in Frameworks */,
 				B67A970C15524E4300EFCF45 /* Foundation.framework in Frameworks */,
@@ -117,6 +126,7 @@
 		B67A970815524E4300EFCF45 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B6C0325F1560BCD300704EF6 /* AVFoundation.framework */,
 				B67A973615524FBA00EFCF45 /* QuartzCore.framework */,
 				B67A970915524E4300EFCF45 /* UIKit.framework */,
 				B67A970B15524E4300EFCF45 /* Foundation.framework */,
@@ -128,6 +138,9 @@
 		B67A970F15524E4300EFCF45 /* PecSnake */ = {
 			isa = PBXGroup;
 			children = (
+				B6C0326F15615F9700704EF6 /* boing.wav */,
+				B6C0326B15615B0000704EF6 /* laser1.wav */,
+				B6C0326C15615B0000704EF6 /* laser2.wav */,
 				B6A9943E15608184004576B8 /* Game Room */,
 				B67A975D1552D76000EFCF45 /* portada.png */,
 				B67A97591552D0EA00EFCF45 /* TiWebColor.h */,
@@ -241,6 +254,9 @@
 				B67A97681552DCBC00EFCF45 /* Default.png in Resources */,
 				B67A976A1552DCC400EFCF45 /* Default@2x.png in Resources */,
 				B6B9F7EF15541CFF007E2DAC /* PEScoreViewController.xib in Resources */,
+				B6C0326D15615B0000704EF6 /* laser1.wav in Resources */,
+				B6C0326E15615B0000704EF6 /* laser2.wav in Resources */,
+				B6C0327015615F9700704EF6 /* boing.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
