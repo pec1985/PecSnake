@@ -65,27 +65,27 @@
 		[_overlayView setBackgroundColor:[UIColor whiteColor]];
 		[_overlayView setAlpha:0.15f];
 		[_alertView setBackgroundColor:[UIColor whiteColor]];
-
+		
 		[_title setTextAlignment:UITextAlignmentCenter];
 		[_message setTextAlignment:UITextAlignmentCenter];
 		
 		[_title setBackgroundColor:[UIColor clearColor]];
 		[_message setBackgroundColor:[UIColor clearColor]];
-
+		
 		[_title setTextColor:[UIColor whiteColor]];
 		[_message setTextColor:[UIColor whiteColor]];
 		
 		[_title setFont:[UIFont fontWithName:@"DS-Digital" size:25]];
 		[_message setFont:[UIFont fontWithName:@"DS-Digital" size:20]];
-
+		
 		[_title setNumberOfLines:0];
 		[_message setNumberOfLines:0];
-
+		
 		[_mainView addSubview:_overlayView];
 		[_innerView addSubview:_title];
 		[_innerView addSubview:_message];
 		[_alertView addSubview:_innerView];
-
+		
 		[_mainView setAlpha:0.0f];
 		[self._view addSubview:_mainView];
 		
@@ -115,7 +115,7 @@
 
 -(UIView *)buttonWithTitle:(NSString *)title
 {
-
+	
 	CGRect mainViewframe = [_innerView bounds];
 	
 	mainViewframe.size.width -= 40;
@@ -130,7 +130,7 @@
 	btnBounds.origin.x += 1;
 	btnBounds.origin.y += 1;
 	[btn setText:title];
-		
+	
 	UITapGestureRecognizer *click = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clicked:)];
 	[click setNumberOfTapsRequired:1];
 	[btn addGestureRecognizer:click];
@@ -141,33 +141,33 @@
 - (void)hide
 {
     CAKeyframeAnimation *animation = [CAKeyframeAnimation
-        animationWithKeyPath:@"transform"];
-
+									  animationWithKeyPath:@"transform"];
+	
     CATransform3D scale1 = CATransform3DMakeScale(1.0, 1.0, 1);
     CATransform3D scale2 = CATransform3DMakeScale(1.2, 1.2, 1);
     CATransform3D scale4 = CATransform3DMakeScale(0.2, 0.2, 1);
-
+	
     NSArray *frameValues = [NSArray arrayWithObjects:
-        [NSValue valueWithCATransform3D:scale1],
-        [NSValue valueWithCATransform3D:scale2],
-        [NSValue valueWithCATransform3D:scale4],
-        nil];
+							[NSValue valueWithCATransform3D:scale1],
+							[NSValue valueWithCATransform3D:scale2],
+							[NSValue valueWithCATransform3D:scale4],
+							nil];
     [animation setValues:frameValues];
-
+	
     NSArray *frameTimes = [NSArray arrayWithObjects:
-        [NSNumber numberWithFloat:0.0],
-        [NSNumber numberWithFloat:0.5],
-        [NSNumber numberWithFloat:1],
-        nil];    
+						   [NSNumber numberWithFloat:0.0],
+						   [NSNumber numberWithFloat:0.5],
+						   [NSNumber numberWithFloat:1],
+						   nil];    
     [animation setKeyTimes:frameTimes];
-
+	
     [animation setFillMode: kCAFillModeForwards];
     [animation setRemovedOnCompletion: NO];
     [animation setDuration: 0.25];
 	[animation setDelegate:self];
-
+	
     [_alertView.layer addAnimation:animation forKey:@"hidepopup"];
-
+	
 }
 
 -(void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
@@ -180,39 +180,49 @@
 - (void)attachPopUpAnimation
 {
     CAKeyframeAnimation *animation = [CAKeyframeAnimation
-        animationWithKeyPath:@"transform"];
-
+									  animationWithKeyPath:@"transform"];
+	
     CATransform3D scale1 = CATransform3DMakeScale(0.2, 0.2, 1);
     CATransform3D scale2 = CATransform3DMakeScale(1.2, 1.2, 1);
     CATransform3D scale3 = CATransform3DMakeScale(0.9, 0.9, 1);
     CATransform3D scale4 = CATransform3DMakeScale(1.0, 1.0, 1);
-
+	
     NSArray *frameValues = [NSArray arrayWithObjects:
-        [NSValue valueWithCATransform3D:scale1],
-        [NSValue valueWithCATransform3D:scale2],
-        [NSValue valueWithCATransform3D:scale3],
-        [NSValue valueWithCATransform3D:scale4],
-        nil];
+							[NSValue valueWithCATransform3D:scale1],
+							[NSValue valueWithCATransform3D:scale2],
+							[NSValue valueWithCATransform3D:scale3],
+							[NSValue valueWithCATransform3D:scale4],
+							nil];
     [animation setValues:frameValues];
-
+	
     NSArray *frameTimes = [NSArray arrayWithObjects:
-        [NSNumber numberWithFloat:0.0],
-        [NSNumber numberWithFloat:0.5],
-        [NSNumber numberWithFloat:0.9],
-        [NSNumber numberWithFloat:1.0],
-        nil];    
+						   [NSNumber numberWithFloat:0.0],
+						   [NSNumber numberWithFloat:0.5],
+						   [NSNumber numberWithFloat:0.9],
+						   [NSNumber numberWithFloat:1.0],
+						   nil];    
     [animation setKeyTimes:frameTimes];
-
+	
     [animation setFillMode: kCAFillModeForwards];
     [animation setRemovedOnCompletion: YES];
     [animation setDuration: 0.25];
-
+	
     [_alertView.layer addAnimation:animation forKey:@"popup"];
 }
 
--(void)show
+-(void)boing
 {
-	
+	NSString *a = [[NSBundle mainBundle] resourcePath];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/boing.wav",a]];
+	NSError *err = nil;
+	AVAudioPlayer *sound = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:(NSError **)&err];
+	if(err != nil)
+		NSLog(@"%@",[err description]);
+	[sound performSelectorInBackground:@selector(play) withObject:nil];
+}
+
+-(void)showAlert
+{
 	CGRect frame = [_innerView bounds];
 	[_title sizeToFit];
 	
@@ -226,12 +236,12 @@
 	CGRect messageFrame = [_message frame];
 	messageFrame.size.width = frame.size.width;
 	messageFrame.origin.y = titleFrame.size.height + 20;
-
+	
 	[_message setFrame:messageFrame];
-
-
+	
+	
 	CGFloat top = titleFrame.size.height + messageFrame.size.height + 40;
-
+	
 	for(NSString *titles in _buttons)
 	{
 		UIView *btn = [[self buttonWithTitle:titles] retain];
@@ -242,9 +252,9 @@
 		top += btnFrame.size.height + 20;
 		[btn release];
 	}
-
+	
 	CGFloat height = titleFrame.size.height + messageFrame.size.height + top - 40;
-
+	
 	frame = [_innerView bounds];
 	frame.size.height = height;
 	
@@ -254,14 +264,26 @@
 	frame.origin.y -= 1; 
 	frame.origin.x -= 1; 
 	[_alertView setBounds:frame];
-
+	
 	[UIView animateWithDuration:0.1
 					 animations:^{ [_mainView setAlpha:1.0f]; }
 					 completion:^(BOOL finished){
-							[_mainView addSubview:_alertView];
-				 			[self attachPopUpAnimation];
+						 [_mainView addSubview:_alertView];
+						 [self attachPopUpAnimation];
 					 }
-				];
+	 ];
+
+}
+
+-(void)show
+{
+	[self boing];
+	[self showAlert];
+}
+
+-(void)showWithNoSound
+{
+	[self showAlert];
 }
 
 @end

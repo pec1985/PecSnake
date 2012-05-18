@@ -28,7 +28,6 @@ static NSString *PAUSE_EVENT = @"pause";
 	NSMutableArray *wormArray;
 	AVAudioPlayer *sound1;
 	AVAudioPlayer *sound2;
-	AVAudioPlayer *sound3;
 	WormDirection direction;
 	NSTimer *timer;
 	NSTimeInterval interVal;
@@ -95,7 +94,7 @@ static NSString *PAUSE_EVENT = @"pause";
 	}
 	[sound2 performSelectorInBackground:@selector(play) withObject:nil];
 }
-
+/*
 -(void)playSound3
 {
 	if(sound3 == nil)
@@ -106,12 +105,12 @@ static NSString *PAUSE_EVENT = @"pause";
 		sound3 = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:(NSError **)&err];
 		if(err != nil)
 		{
-			NSLog(@"%@",[err description]);
+			NSLog(@"%@",[err descriptn]);
 		}
 	}
 	[sound3 performSelectorInBackground:@selector(play) withObject:nil];
 }
-
+*/
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -119,7 +118,7 @@ static NSString *PAUSE_EVENT = @"pause";
 		direction = WormDirectionRight;
 		wormArray = [[NSMutableArray alloc] init];
 		numberOfCandy = 0;
-		interVal = 0.1f;
+		interVal = 0.12f;
 		time = 1;
 		currentScore = 0;
 		extraScore = 0;
@@ -184,7 +183,6 @@ static NSString *PAUSE_EVENT = @"pause";
 	RELEASE_TO_NIL(flashView)
 	RELEASE_TO_NIL(sound1)
 	RELEASE_TO_NIL(sound2)
-	RELEASE_TO_NIL(sound3)
 	[super dealloc];
 }
 
@@ -227,7 +225,6 @@ static NSString *PAUSE_EVENT = @"pause";
 	[urs setObject:ar forKey:@"game_scores"];
 	[urs synchronize];
 	[ar release];
-	[self playSound3];
 }
 
 #pragma mark - Move Worm Directions

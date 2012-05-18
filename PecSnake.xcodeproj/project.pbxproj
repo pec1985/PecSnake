@@ -138,33 +138,15 @@
 		B67A970F15524E4300EFCF45 /* PecSnake */ = {
 			isa = PBXGroup;
 			children = (
-				B6C0326F15615F9700704EF6 /* boing.wav */,
-				B6C0326B15615B0000704EF6 /* laser1.wav */,
-				B6C0326C15615B0000704EF6 /* laser2.wav */,
+				B69DD7CA1563577F00EA3304 /* Assets */,
+				B69DD7C91563577300EA3304 /* Utils */,
+				B69DD7C81563575800EA3304 /* Score List */,
+				B69DD7C71563571900EA3304 /* Main Menu */,
+				B69DD7C51563569800EA3304 /* UI */,
 				B6A9943E15608184004576B8 /* Game Room */,
-				B67A975D1552D76000EFCF45 /* portada.png */,
-				B67A97591552D0EA00EFCF45 /* TiWebColor.h */,
-				B67A975A1552D0EA00EFCF45 /* TiWebColor.m */,
-				B67A972715524E8700EFCF45 /* PEButton.h */,
-				B67A972815524E8700EFCF45 /* PEButton.m */,
-				B67A972915524E8700EFCF45 /* PESquareView.h */,
-				B67A972A15524E8800EFCF45 /* PESquareView.m */,
-				B67A972B15524E8800EFCF45 /* PELabel.h */,
-				B67A972C15524E8800EFCF45 /* PELabel.m */,
-				B67A972515524E7F00EFCF45 /* PERetroAlert.h */,
-				B67A972615524E7F00EFCF45 /* PERetroAlert.m */,
-				B67A972315524E7200EFCF45 /* DS-DIGII.TTF */,
-				B67A972015524E6700EFCF45 /* PEMainMenu.h */,
-				B67A972115524E6700EFCF45 /* PEMainMenu.m */,
-				B67A972215524E6700EFCF45 /* PEMainMenu.xib */,
 				B67A971815524E4400EFCF45 /* PEAppDelegate.h */,
 				B67A971915524E4400EFCF45 /* PEAppDelegate.m */,
 				B67A971015524E4300EFCF45 /* Supporting Files */,
-				B6B9F7EB15541CFF007E2DAC /* PEScoreViewController.h */,
-				B6B9F7EC15541CFF007E2DAC /* PEScoreViewController.m */,
-				B6B9F7ED15541CFF007E2DAC /* PEScoreViewController.xib */,
-				B6B9F7F415558760007E2DAC /* PETableviewCell.h */,
-				B6B9F7F515558760007E2DAC /* PETableviewCell.m */,
 			);
 			path = PecSnake;
 			sourceTree = "<group>";
@@ -180,14 +162,72 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		B69DD7C51563569800EA3304 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				B6B9F7F415558760007E2DAC /* PETableviewCell.h */,
+				B6B9F7F515558760007E2DAC /* PETableviewCell.m */,
+				B67A972715524E8700EFCF45 /* PEButton.h */,
+				B67A972815524E8700EFCF45 /* PEButton.m */,
+				B67A972915524E8700EFCF45 /* PESquareView.h */,
+				B67A972A15524E8800EFCF45 /* PESquareView.m */,
+				B67A972B15524E8800EFCF45 /* PELabel.h */,
+				B67A972C15524E8800EFCF45 /* PELabel.m */,
+				B67A972515524E7F00EFCF45 /* PERetroAlert.h */,
+				B67A972615524E7F00EFCF45 /* PERetroAlert.m */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		B69DD7C71563571900EA3304 /* Main Menu */ = {
+			isa = PBXGroup;
+			children = (
+				B67A972015524E6700EFCF45 /* PEMainMenu.h */,
+				B67A972115524E6700EFCF45 /* PEMainMenu.m */,
+				B67A972215524E6700EFCF45 /* PEMainMenu.xib */,
+			);
+			name = "Main Menu";
+			sourceTree = "<group>";
+		};
+		B69DD7C81563575800EA3304 /* Score List */ = {
+			isa = PBXGroup;
+			children = (
+				B6B9F7EB15541CFF007E2DAC /* PEScoreViewController.h */,
+				B6B9F7EC15541CFF007E2DAC /* PEScoreViewController.m */,
+				B6B9F7ED15541CFF007E2DAC /* PEScoreViewController.xib */,
+			);
+			name = "Score List";
+			sourceTree = "<group>";
+		};
+		B69DD7C91563577300EA3304 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B67A97591552D0EA00EFCF45 /* TiWebColor.h */,
+				B67A975A1552D0EA00EFCF45 /* TiWebColor.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		B69DD7CA1563577F00EA3304 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				B6C0326F15615F9700704EF6 /* boing.wav */,
+				B6C0326B15615B0000704EF6 /* laser1.wav */,
+				B6C0326C15615B0000704EF6 /* laser2.wav */,
+				B67A975D1552D76000EFCF45 /* portada.png */,
+				B67A972315524E7200EFCF45 /* DS-DIGII.TTF */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
 		B6A9943E15608184004576B8 /* Game Room */ = {
 			isa = PBXGroup;
 			children = (
+				B6A99440156081AA004576B8 /* PEScores.h */,
+				B6A99441156081AA004576B8 /* PEScores.m */,
 				B67A972D15524E8800EFCF45 /* PEGameViewController.h */,
 				B67A972E15524E8800EFCF45 /* PEGameViewController.m */,
 				B67A972F15524E8800EFCF45 /* PEGameViewController.xib */,
-				B6A99440156081AA004576B8 /* PEScores.h */,
-				B6A99441156081AA004576B8 /* PEScores.m */,
 			);
 			name = "Game Room";
 			sourceTree = "<group>";

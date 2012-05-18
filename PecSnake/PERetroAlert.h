@@ -7,6 +7,7 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import <AVFoundation/AVAudioPlayer.h>
 
 @protocol PERetroAlertDelegate <NSObject>
 
@@ -21,6 +22,7 @@
 }
 
 -(id)initWithTitle:(NSString *)title message:(NSString *)msg buttonNames:(NSArray *)buttons inView:(UIView *)view;
+-(void)showWithNoSound;
 -(void)show;
 -(void)hide;
 

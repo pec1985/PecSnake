@@ -68,7 +68,7 @@
 - (IBAction)gameCredits:(id)sender {
 	comingSoon = [[PERetroAlert alloc] initWithTitle:@"coming soon" message:@"meh" buttonNames:[NSArray arrayWithObject:@"ok"] inView:[self view]];
 	[comingSoon setDelegate:self];
-	[comingSoon show];
+	[comingSoon showWithNoSound];
 }
 - (IBAction)gameScores:(id)sender {
 	PEScoreViewController *a = [[PEScoreViewController alloc] init];

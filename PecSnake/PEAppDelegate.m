@@ -21,7 +21,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [self setWindow: [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease]];
+//	[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"game_scores"];
+//  [[NSUserDefaults standardUserDefaults] synchronize];
+	[self setWindow: [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease]];
 	[[self window] setRootViewController:[[[PEMainMenu alloc] init] autorelease]];
     [self.window makeKeyAndVisible];
     return YES;
