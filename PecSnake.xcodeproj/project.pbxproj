@@ -37,6 +37,7 @@
 		B6C0326D15615B0000704EF6 /* laser1.wav in Resources */ = {isa = PBXBuildFile; fileRef = B6C0326B15615B0000704EF6 /* laser1.wav */; };
 		B6C0326E15615B0000704EF6 /* laser2.wav in Resources */ = {isa = PBXBuildFile; fileRef = B6C0326C15615B0000704EF6 /* laser2.wav */; };
 		B6C0327015615F9700704EF6 /* boing.wav in Resources */ = {isa = PBXBuildFile; fileRef = B6C0326F15615F9700704EF6 /* boing.wav */; };
+		EB69BEF715662257009A66C0 /* PEWormController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB69BEF615662257009A66C0 /* PEWormController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +85,8 @@
 		B6C0326B15615B0000704EF6 /* laser1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = laser1.wav; sourceTree = "<group>"; };
 		B6C0326C15615B0000704EF6 /* laser2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = laser2.wav; sourceTree = "<group>"; };
 		B6C0326F15615F9700704EF6 /* boing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = boing.wav; sourceTree = "<group>"; };
+		EB69BEF515662257009A66C0 /* PEWormController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEWormController.h; sourceTree = "<group>"; };
+		EB69BEF615662257009A66C0 /* PEWormController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEWormController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +231,8 @@
 				B67A972D15524E8800EFCF45 /* PEGameViewController.h */,
 				B67A972E15524E8800EFCF45 /* PEGameViewController.m */,
 				B67A972F15524E8800EFCF45 /* PEGameViewController.xib */,
+				EB69BEF515662257009A66C0 /* PEWormController.h */,
+				EB69BEF615662257009A66C0 /* PEWormController.m */,
 			);
 			name = "Game Room";
 			sourceTree = "<group>";
@@ -319,6 +324,7 @@
 				B6B9F7EE15541CFF007E2DAC /* PEScoreViewController.m in Sources */,
 				B6B9F7F615558760007E2DAC /* PETableviewCell.m in Sources */,
 				B6A99442156081AA004576B8 /* PEScores.m in Sources */,
+				EB69BEF715662257009A66C0 /* PEWormController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,7 +347,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Pedro Enrique (JVQA96XLJ5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pedro Enrique (9AFY86RE7C)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -357,7 +363,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				PROVISIONING_PROFILE = "FA97AAA7-7C6B-4AF8-86CF-92F656D3317B";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -367,7 +373,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Pedro Enrique (JVQA96XLJ5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Pedro Enrique (9AFY86RE7C)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -377,7 +383,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "FA97AAA7-7C6B-4AF8-86CF-92F656D3317B";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

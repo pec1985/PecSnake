@@ -34,6 +34,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	NSString *a = [[NSBundle mainBundle] pathForResource:@"boing" ofType:@"wav"];
+	NSURL *url = [NSURL fileURLWithPath:a];
+	AVAudioPlayer *p = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+	[p prepareToPlay];
+	[p release];
     // Do any additional setup after loading the view from its nib.
 }
 

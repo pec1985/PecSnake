@@ -11,9 +11,12 @@
 #import "PESquareView.h"
 #import "PELabel.h"
 #import "PERetroAlert.h"
+#import "PEWormController.h"
 
-@interface PEGameViewController : UIViewController<PERetroAlertDelegate>
-
+@interface PEGameViewController : UIViewController<PERetroAlertDelegate, PEWormControllerDelegate>
+{
+	PEWormController *wormController;
+}
 @property (retain, nonatomic) IBOutlet PESquareView *scoreView;
 @property (retain, nonatomic) IBOutlet PELabel *scoreLabel;
 @property (retain, nonatomic) IBOutlet PESquareView *gameRoom;

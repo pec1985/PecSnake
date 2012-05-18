@@ -17,6 +17,8 @@ typedef enum {
 	WormDirectionBottom
 } WormDirection;
 
+
+
 static NSString *PAUSE_EVENT = @"pause";
 
 #define RELEASE_TO_NIL(x) { if (x!=nil) { [x release]; x = nil; } }
@@ -25,7 +27,6 @@ static NSString *PAUSE_EVENT = @"pause";
 @interface PEGameViewController ()
 {
 @private
-	NSMutableArray *wormArray;
 	AVAudioPlayer *sound1;
 	AVAudioPlayer *sound2;
 	WormDirection direction;
@@ -39,8 +40,6 @@ static NSString *PAUSE_EVENT = @"pause";
 	PESquareView *candy;
 	PESquareView *extraCandy;
 	PERetroAlert *retroAlert;
-	CGFloat maxY;
-	CGFloat maxX;
 	NSInteger numberOfCandy;
 	int time;
 	int currentScore;
@@ -51,7 +50,6 @@ static NSString *PAUSE_EVENT = @"pause";
 -(void)resetCandy;
 -(UIView *)candy;
 -(PESquareView *)extraCandy;
--(void)addWormPiece;
 -(void)showExtraCandy:(id)sender;
 
 @end
@@ -67,8 +65,9 @@ static NSString *PAUSE_EVENT = @"pause";
 {
 	if(sound1 == nil)
 	{
-		NSString *a = [[NSBundle mainBundle] resourcePath];
-		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/laser1.wav",a]];
+		NSString *a = [[NSBundle mainBundle] pathForResource:@"laser1" ofType:@"wav"];
+		NSURL *url = [NSURL fileURLWithPath:a];
+		NSLog(@"%@", a);
 		NSError *err = nil;
 		sound1 = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:(NSError **)&err];
 		if(err != nil)
@@ -83,8 +82,9 @@ static NSString *PAUSE_EVENT = @"pause";
 {
 	if(sound2 == nil)
 	{
-		NSString *a = [[NSBundle mainBundle] resourcePath];
-		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/laser2.wav",a]];
+		NSString *a = [[NSBundle mainBundle] pathForResource:@"laser2" ofType:@"wav"];
+		NSURL *url = [NSURL fileURLWithPath:a];
+		NSLog(@"%@", url);
 		NSError *err = nil;
 		sound2 = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:(NSError **)&err];
 		if(err != nil)
@@ -94,29 +94,12 @@ static NSString *PAUSE_EVENT = @"pause";
 	}
 	[sound2 performSelectorInBackground:@selector(play) withObject:nil];
 }
-/*
--(void)playSound3
-{
-	if(sound3 == nil)
-	{
-		NSString *a = [[NSBundle mainBundle] resourcePath];
-		NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/boing.wav",a]];
-		NSError *err = nil;
-		sound3 = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:(NSError **)&err];
-		if(err != nil)
-		{
-			NSLog(@"%@",[err descriptn]);
-		}
-	}
-	[sound3 performSelectorInBackground:@selector(play) withObject:nil];
-}
-*/
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
 		direction = WormDirectionRight;
-		wormArray = [[NSMutableArray alloc] init];
 		numberOfCandy = 0;
 		interVal = 0.12f;
 		time = 1;
@@ -141,14 +124,15 @@ static NSString *PAUSE_EVENT = @"pause";
 	[scoreLabel setBackgroundColor:[TiWebColor webColorNamed:@"#333"]];
 	[pause setBackgroundColor:[TiWebColor webColorNamed:@"#333"]];
 	
-	maxX = gameRoom.frame.size.width - 5;
-	maxY = gameRoom.frame.size.height - 5;
 	
-	[self createWormWithLength:1];
-	[self resetCandy];
 	extraCandy = [self extraCandy];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pauseClicked:) name:PAUSE_EVENT object:nil];
 	
+	wormController = [[PEWormController alloc] initWithParentView:gameRoom];
+	[wormController setDelegate:self];
+	
+	[wormController createWormWithLength:1];
+	[self resetCandy];
 	
 }
 
@@ -167,14 +151,11 @@ static NSString *PAUSE_EVENT = @"pause";
 -(void)dealloc
 {
 	NSLog(@"dealloc");
-	for(UIView *v in wormArray)
-		[v removeFromSuperview];
-	
+
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[wormArray removeAllObjects];
+	RELEASE_TO_NIL(wormController)
 	RELEASE_TO_NIL(finalScore)
 	RELEASE_TO_NIL(extraCandy)	
-	RELEASE_TO_NIL(wormArray)
 	RELEASE_TO_NIL(candy)
 	RELEASE_TO_NIL(gameRoom)	
 	RELEASE_TO_NIL(scoreLabel)
@@ -229,130 +210,28 @@ static NSString *PAUSE_EVENT = @"pause";
 
 #pragma mark - Move Worm Directions
 
--(void)repositionArrayAtPoint:(CGPoint)pt
-{
-	PESquareView *lastWorm = [wormArray lastObject];
-	[lastWorm setCenter:pt];
-	[wormArray removeObject:lastWorm];
-	[wormArray insertObject:lastWorm atIndex:0];
-	CGPoint point = [lastWorm center];
-	for(PESquareView *w in wormArray)
-	{
-		if([lastWorm isEqual:w] == NO && CGPointEqualToPoint([w center], point))
-		{
-			[self endGame];
-			return;
-		}	
-	}
-	if(CGPointEqualToPoint([[self candy] center], [lastWorm center]))
-	{
-		[self playSound1];
-		numberOfCandy ++;
-		[self addWormPiece];
-		[self resetCandy];
-	}
-	
-	if([extraCandy isHidden] == NO && CGPointEqualToPoint([extraCandy center], [lastWorm center]))
-	{
-		[self playSound2];
-		[extraCandy setHidden:YES];
-		[self updateScoreWithPoints: time * 25];
-		[flashView setHidden:NO];
-		[UIView animateWithDuration: 0.35f
-						 animations:^{
-							 [flashView setAlpha:0];
-						 }
-						 completion:^(BOOL completetion){
-							 [flashView setHidden:YES];
-							 [flashView setAlpha:1.0];
-						 }
-		 ];
-		
-	}
-	
-}
-
--(void)moveLeft
-{
-	PESquareView *firstWorm = [wormArray objectAtIndex:0];
-	CGPoint point = [firstWorm center];
-	point.x -= 10;	
-	if(point.x == -5) point.x = maxX;
-	[self repositionArrayAtPoint:point];
-	
-}
--(void)moveRight
-{
-	PESquareView *firstWorm = [wormArray objectAtIndex:0];
-	CGPoint point = [firstWorm center];
-	point.x += 10;
-	if(point.x == maxX+10) point.x = 5;
-	[self repositionArrayAtPoint:point];
-}
--(void)moveTop
-{
-	PESquareView *firstWorm = [wormArray objectAtIndex:0];
-	CGPoint point = [firstWorm center];
-	point.y -= 10;
-	if(point.y == -5) point.y = maxY;
-	[self repositionArrayAtPoint:point];
-}
--(void)moveBottom
-{
-	PESquareView *firstWorm = [wormArray objectAtIndex:0];
-	CGPoint point = [firstWorm center];
-	point.y += 10;
-	if(point.y == maxY+10) point.y = 5;
-	[self repositionArrayAtPoint:point];
-}
-
 
 -(void)moveWorm
 {
 	switch (direction) {
 		case WormDirectionLeft:
-    		[self moveLeft];
+    		[wormController moveLeft];
     		break;
 		case WormDirectionRight:
-			[self moveRight];
+			[wormController moveRight];
 			break;
 		case WormDirectionTop:
-			[self moveTop];
+			[wormController moveUp];
 			break;
 		case WormDirectionBottom:
-			[self moveBottom];
+			[wormController moveDown];
 			break;
 	}
 }
 
 #pragma mark - Worm Stuff
 
--(void)addWormPiece
-{
-	PESquareView *first = [wormArray lastObject];
-	CGPoint center = [first center];
-	
-	PESquareView *newSquare = [[self wormPiece] retain];
-	[newSquare setCenter:center];
-	[wormArray addObject:newSquare];
-	[gameRoom addSubview:newSquare];
-	
-	[newSquare release];
-	[self updateScoreWithPoints: time];
-}
 
--(void)createWormWithLength:(NSInteger)num
-{
-	CGPoint center = CGPointMake( ((arc4random()%29)*10)+5, ((arc4random()%39)*10)+5);
-	for(int i = 0; i < num; i++)
-	{
-		PESquareView *sq = [self wormPiece];
-		[sq setCenter:center];
-		[wormArray addObject:sq];
-		[gameRoom addSubview:sq];
-		center.x -= 10;
-	}
-}
 
 #pragma mark - Views, Candies, etc...
 
@@ -381,13 +260,6 @@ static NSString *PAUSE_EVENT = @"pause";
 	return extraCandy;
 }
 
--(PESquareView *)wormPiece
-{
-	PESquareView *a = [[PESquareView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
-	[a setBackgroundColor:[UIColor blueColor]];
-	return [a autorelease];
-}
-
 
 #pragma mark - Game Timers
 
@@ -403,7 +275,7 @@ static NSString *PAUSE_EVENT = @"pause";
 -(void)resetExtraCandy
 {
 	CGPoint center = CGPointMake( ((arc4random()%29)*10)+5, ((arc4random()%39)*10)+5);
-	for(PESquareView *w in wormArray)
+	for(PESquareView *w in [wormController wormArray])
 	{
 		if(CGPointEqualToPoint(center, [w center]))
 		{
@@ -417,6 +289,7 @@ static NSString *PAUSE_EVENT = @"pause";
 		return;
 	}
 	[extraCandy setCenter:center];
+	[wormController setExtraCandyCenter:center];
 }
 
 
@@ -443,7 +316,7 @@ static NSString *PAUSE_EVENT = @"pause";
 -(void)resetCandy
 {
 	CGPoint center = CGPointMake( ((arc4random()%29)*10)+5, ((arc4random()%39)*10)+5);
-	for(PESquareView *w in wormArray)
+	for(PESquareView *w in [wormController wormArray])
 	{
 		if(CGPointEqualToPoint(center, [w center]))
 		{
@@ -452,6 +325,8 @@ static NSString *PAUSE_EVENT = @"pause";
 		}
 	}
 	[[self candy] setCenter:center];
+	NSLog(@"%f",center.x);
+	[wormController setCandyCenter:center];
 	if(numberOfCandy == 5)
 	{
 		numberOfCandy = 0;
@@ -521,86 +396,36 @@ static NSString *PAUSE_EVENT = @"pause";
 	isPaused = NO;
 }
 
+-(void)wormAteCandy
+{
+	[self playSound1];
+	numberOfCandy ++;
+	[wormController addWormPiece];
+	[self updateScoreWithPoints: time];
+	
+	[self resetCandy];
+
+}
+-(void)wormAteExtraCandy
+{
+	[self playSound2];
+	[extraCandy setHidden:YES];
+	[self updateScoreWithPoints: time * 25];
+	[flashView setHidden:NO];
+	[UIView animateWithDuration: 0.35f
+					 animations:^{
+						 [flashView setAlpha:0];
+					 }
+					 completion:^(BOOL completetion){
+						 [flashView setHidden:YES];
+						 [flashView setAlpha:1.0];
+					 }
+	 ];
+
+}
+-(void)wormCrahed
+{
+	[self endGame];
+}
+
 @end
-
-
-
-/*
- 
- - (void)swipeLeft
- {
- if(direction != WormDirectionRight)
- direction = WormDirectionLeft;
- }
- 
- - (void)swipeRight
- {
- if(direction != WormDirectionLeft)
- direction = WormDirectionRight;
- }
- - (void)swipeUp
- {
- if(direction != WormDirectionBottom)
- direction = WormDirectionTop;
- }
- 
- - (void)swipeDown
- {
- if(direction != WormDirectionTop)
- direction = WormDirectionBottom;
- }
- 
- - (IBAction)panGesture:(UIPanGestureRecognizer *)gestureRecognizer {
- 
- CGPoint sPoint = [gestureRecognizer translationInView:[gestureRecognizer view]];
- 
- WormDirection _direction;
- 
- CGPoint newPoint = CGPointMake(currentPoint.x-sPoint.x, currentPoint.y-sPoint.y);
- 
- if(newPoint.y > newPoint.x && newPoint.y > 10)
- {
- _direction = WormDirectionTop;	
- } else
- 
- if(newPoint.y > newPoint.x && newPoint.x < -10)
- {
- _direction = WormDirectionRight;
- } else
- 
- if(newPoint.y < newPoint.x && newPoint.y < -10)
- {
- _direction = WormDirectionBottom;
- } else
- 
- if(newPoint.y < newPoint.x && newPoint.x > 10)
- {
- _direction = WormDirectionLeft;
- }
- currentPoint = sPoint;
- 
- 
- 
- switch (_direction) {
- case WormDirectionTop:
- [pause setText:@"Top"];
- [self swipeUp];
- break;
- case WormDirectionRight:
- [pause setText:@"Right"];
- [self swipeRight];
- break;
- case WormDirectionBottom:
- [pause setText:@"Bottom"];
- [self swipeDown];
- break;
- case WormDirectionLeft:
- [pause setText:@"Left"];
- [self swipeLeft];
- break;
- }
- 
- }
- 
- 
- */

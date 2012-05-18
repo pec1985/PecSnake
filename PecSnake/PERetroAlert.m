@@ -212,10 +212,15 @@
 
 -(void)boing
 {
-	NSString *a = [[NSBundle mainBundle] resourcePath];
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@/boing.wav",a]];
+	NSString *a = [[NSBundle mainBundle] pathForResource:@"boing" ofType:@"wav"];
+	NSURL *url = [NSURL fileURLWithPath:a];
 	NSError *err = nil;
+	
+//	AudioServicesCreateSystemSoundID((CFURLRef)a, &url);
+//	AudioServicesPlaySystemSound(url);
+
 	AVAudioPlayer *sound = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:(NSError **)&err];
+
 	if(err != nil)
 		NSLog(@"%@",[err description]);
 	[sound performSelectorInBackground:@selector(play) withObject:nil];
