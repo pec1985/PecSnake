@@ -35,4 +35,13 @@
 	return self;
 }
 
+-(id)initWithFrame:(CGRect)frame
+{
+	if(self = [super initWithFrame:frame])
+	{
+		[self props];
+	}
+	return self;
+}
+
 @end

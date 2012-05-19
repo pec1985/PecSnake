@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVAudioPlayer.h>
+#import "PECountDown.h"
 #import "PESquareView.h"
 #import "PELabel.h"
 #import "PERetroAlert.h"
 #import "PEWormController.h"
 
-@interface PEGameViewController : UIViewController<PERetroAlertDelegate, PEWormControllerDelegate>
+@interface PEGameViewController : UIViewController<PERetroAlertDelegate, PEWormControllerDelegate, PECountDownDelegate>
 {
+	PECountDown *countDown;
 	PEWormController *wormController;
 }
 @property (retain, nonatomic) IBOutlet PESquareView *scoreView;

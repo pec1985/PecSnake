@@ -38,6 +38,7 @@
 		B6C0326E15615B0000704EF6 /* laser2.wav in Resources */ = {isa = PBXBuildFile; fileRef = B6C0326C15615B0000704EF6 /* laser2.wav */; };
 		B6C0327015615F9700704EF6 /* boing.wav in Resources */ = {isa = PBXBuildFile; fileRef = B6C0326F15615F9700704EF6 /* boing.wav */; };
 		EB69BEF715662257009A66C0 /* PEWormController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB69BEF615662257009A66C0 /* PEWormController.m */; };
+		EB69BF4115677FBD009A66C0 /* PECountDown.m in Sources */ = {isa = PBXBuildFile; fileRef = EB69BF4015677FBD009A66C0 /* PECountDown.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +88,8 @@
 		B6C0326F15615F9700704EF6 /* boing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = boing.wav; sourceTree = "<group>"; };
 		EB69BEF515662257009A66C0 /* PEWormController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEWormController.h; sourceTree = "<group>"; };
 		EB69BEF615662257009A66C0 /* PEWormController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEWormController.m; sourceTree = "<group>"; };
+		EB69BF3F15677FBD009A66C0 /* PECountDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PECountDown.h; sourceTree = "<group>"; };
+		EB69BF4015677FBD009A66C0 /* PECountDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PECountDown.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +144,7 @@
 		B67A970F15524E4300EFCF45 /* PecSnake */ = {
 			isa = PBXGroup;
 			children = (
+				EB69BF3E15677FA0009A66C0 /* Count down */,
 				B69DD7CA1563577F00EA3304 /* Assets */,
 				B69DD7C91563577300EA3304 /* Utils */,
 				B69DD7C81563575800EA3304 /* Score List */,
@@ -237,6 +241,15 @@
 			name = "Game Room";
 			sourceTree = "<group>";
 		};
+		EB69BF3E15677FA0009A66C0 /* Count down */ = {
+			isa = PBXGroup;
+			children = (
+				EB69BF3F15677FBD009A66C0 /* PECountDown.h */,
+				EB69BF4015677FBD009A66C0 /* PECountDown.m */,
+			);
+			name = "Count down";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -325,6 +338,7 @@
 				B6B9F7F615558760007E2DAC /* PETableviewCell.m in Sources */,
 				B6A99442156081AA004576B8 /* PEScores.m in Sources */,
 				EB69BEF715662257009A66C0 /* PEWormController.m in Sources */,
+				EB69BF4115677FBD009A66C0 /* PECountDown.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

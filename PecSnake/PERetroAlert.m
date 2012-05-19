@@ -224,6 +224,7 @@
 	if(err != nil)
 		NSLog(@"%@",[err description]);
 	[sound performSelectorInBackground:@selector(play) withObject:nil];
+	[sound release];
 }
 
 -(void)showAlert

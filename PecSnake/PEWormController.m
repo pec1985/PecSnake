@@ -49,7 +49,7 @@
 {
 	PESquareView *a = [[PESquareView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
 	[a setBackgroundColor:[UIColor blueColor]];
-	return [a autorelease];
+	return a;
 }
 
 -(void)createWormWithLength:(NSInteger)num
@@ -61,6 +61,7 @@
 		[sq setCenter:center];
 		[array addObject:sq];
 		[gameRoom addSubview:sq];
+		[sq release];
 		center.x -= 10;
 	}
 }
@@ -96,7 +97,7 @@
 	PESquareView *first = [array lastObject];
 	CGPoint center = [first center];
 	
-	PESquareView *newSquare = [[self newWormPiece] retain];
+	PESquareView *newSquare = [self newWormPiece];
 	[newSquare setCenter:center];
 	[array addObject:newSquare];
 	[gameRoom addSubview:newSquare];

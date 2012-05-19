@@ -124,7 +124,6 @@ static NSString *PAUSE_EVENT = @"pause";
 	[scoreLabel setBackgroundColor:[TiWebColor webColorNamed:@"#333"]];
 	[pause setBackgroundColor:[TiWebColor webColorNamed:@"#333"]];
 	
-	
 	extraCandy = [self extraCandy];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pauseClicked:) name:PAUSE_EVENT object:nil];
 	
@@ -134,6 +133,22 @@ static NSString *PAUSE_EVENT = @"pause";
 	[wormController createWormWithLength:1];
 	[self resetCandy];
 	
+}
+
+-(void)countDownDidFinish
+{
+	RELEASE_TO_NIL(countDown)
+	[self startTimer];
+}
+
+-(void)startCountDown
+{
+	if(countDown == nil)
+	{
+		countDown = [[PECountDown alloc] initWithCountDown:3 inView:[self view]];
+		[countDown setDelegate:self];
+	}
+	[countDown startCountDown];
 }
 
 - (void)viewDidUnload
@@ -153,6 +168,7 @@ static NSString *PAUSE_EVENT = @"pause";
 	NSLog(@"dealloc");
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	RELEASE_TO_NIL(countDown);
 	RELEASE_TO_NIL(wormController)
 	RELEASE_TO_NIL(finalScore)
 	RELEASE_TO_NIL(extraCandy)	
@@ -296,7 +312,7 @@ static NSString *PAUSE_EVENT = @"pause";
 -(void)showExtraCandy:(id)sender
 {
 	[extraCandy setHidden:NO];
-	
+	[wormController setExtraCandyHidden:NO];
 	[UIView animateWithDuration: 5.0
 					 animations:^{
 						 [extraCandy setAlpha:0.25];
@@ -304,6 +320,7 @@ static NSString *PAUSE_EVENT = @"pause";
 					 completion:^(BOOL complete){
 						 [extraCandy setAlpha:1.0];
 						 [extraCandy setHidden:YES];
+						 [wormController setExtraCandyHidden:YES];
 					 }
 	 ];
 
@@ -389,7 +406,7 @@ static NSString *PAUSE_EVENT = @"pause";
 	RELEASE_TO_NIL(retroAlert);
 	if([title isEqualToString:@"continue"] || [title isEqualToString:@"go"])
 	{
-		[self startTimer];
+		[self startCountDown];
 	}
 	if([title isEqualToString:@"end"])
 		[self dismissModalViewControllerAnimated:YES];
@@ -410,6 +427,7 @@ static NSString *PAUSE_EVENT = @"pause";
 {
 	[self playSound2];
 	[extraCandy setHidden:YES];
+	[wormController setExtraCandyHidden:YES];
 	[self updateScoreWithPoints: time * 25];
 	[flashView setHidden:NO];
 	[UIView animateWithDuration: 0.35f
