@@ -25,12 +25,12 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-	
+	[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
 
 	NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);    // Normal launch stuff
 
 	[FlurryAnalytics setAppVersion:@"1.0"];
-	[FlurryAnalytics startSession:@"L7LUHDDIRNCILSR7YALD"];
+//	[FlurryAnalytics startSession:@"L7LUHDDIRNCILSR7YALD"];
 //	[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"game_scores"];
 //  [[NSUserDefaults standardUserDefaults] synchronize];
 	[self setWindow: [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease]];
