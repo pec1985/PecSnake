@@ -9,6 +9,7 @@
 #import "PEMainMenu.h"
 #import "PEGameViewController.h"
 #import "PEScoreViewController.h"
+#import "PECreditsViewController.h"
 
 @implementation PEMainMenu
 
@@ -34,12 +35,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	NSString *a = [[NSBundle mainBundle] pathForResource:@"boing" ofType:@"wav"];
-	NSURL *url = [NSURL fileURLWithPath:a];
-	AVAudioPlayer *p = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
-	[p prepareToPlay];
-	[p release];
-    // Do any additional setup after loading the view from its nib.
 }
 
 - (void)viewDidUnload
@@ -71,9 +66,14 @@
 	[a release];
 }
 - (IBAction)gameCredits:(id)sender {
-	comingSoon = [[PERetroAlert alloc] initWithTitle:@"coming soon" message:@"meh" buttonNames:[NSArray arrayWithObject:@"ok"] inView:[self view]];
-	[comingSoon setDelegate:self];
-	[comingSoon showWithNoSound];
+//	comingSoon = [[PERetroAlert alloc] initWithTitle:@"coming soon" message:@"meh" buttonNames:[NSArray arrayWithObject:@"ok"] inView:[self view]];
+//	[comingSoon setDelegate:self];
+//	[comingSoon showWithNoSound];
+	PECreditsViewController *a = [[PECreditsViewController alloc] init];
+	[a setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+	[self presentViewController:a animated:YES completion:nil];
+	[a release];
+
 }
 - (IBAction)gameScores:(id)sender {
 	PEScoreViewController *a = [[PEScoreViewController alloc] init];

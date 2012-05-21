@@ -50,12 +50,18 @@
 	{
 		[labelNumber removeFromSuperview];
 	}
-	if(_number <= 0)
-	{
-		[delegate countDownDidFinish];
-		[overLay removeFromSuperview];
-		[overLay release];
-		return;
+	switch (_number) {
+		case 1:
+			[PEUtils playSoundFromFile:@"beep2"];
+		break;
+		case 0:
+			[delegate countDownDidFinish];
+			[overLay removeFromSuperview];
+			[overLay release];
+			return;
+		default:
+			[PEUtils playSoundFromFile:@"beep1"];
+			break;
 	}
 	
 	if([delegate respondsToSelector:@selector(countDownChanged:)])

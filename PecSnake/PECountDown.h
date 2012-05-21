@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
+#import "PEUtils.h"
 
 @protocol PECountDownDelegate <NSObject>
 @required

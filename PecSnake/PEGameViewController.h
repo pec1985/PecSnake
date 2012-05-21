@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <AVFoundation/AVAudioPlayer.h>
-#import "PECountDown.h"
-#import "PESquareView.h"
-#import "PELabel.h"
-#import "PERetroAlert.h"
 #import "PEWormController.h"
+#import "PESquareView.h"
+#import "PERetroAlert.h"
+#import "PECountDown.h"
+#import "PEScores.h"
+#import "PELabel.h"
+#import "PEUtils.h"
+#import "TiWebColor.h"
 
 @interface PEGameViewController : UIViewController<PERetroAlertDelegate, PEWormControllerDelegate, PECountDownDelegate>
 {

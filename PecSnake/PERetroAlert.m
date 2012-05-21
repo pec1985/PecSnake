@@ -7,17 +7,16 @@
 //
 
 #import "PERetroAlert.h"
-#import "PEButton.h"
 
 @interface PERetroAlert()
 {
-	UIView *_mainView;
-	UIView *_overlayView;
-	UIView *_alertView;
-	UIView *_innerView;
-	UILabel *_title;
-	UILabel *_message;
-	NSArray *_buttons;
+	UIView	*_mainView;
+	UIView	*_overlayView;
+	UIView	*_alertView;
+	UIView	*_innerView;
+	UILabel	*_title;
+	UILabel	*_message;
+	NSArray	*_buttons;
 }
 
 @property(nonatomic, retain)UIView *_view;
@@ -210,23 +209,6 @@
     [_alertView.layer addAnimation:animation forKey:@"popup"];
 }
 
--(void)boing
-{
-	NSString *a = [[NSBundle mainBundle] pathForResource:@"boing" ofType:@"wav"];
-	NSURL *url = [NSURL fileURLWithPath:a];
-	NSError *err = nil;
-	
-//	AudioServicesCreateSystemSoundID((CFURLRef)a, &url);
-//	AudioServicesPlaySystemSound(url);
-
-	AVAudioPlayer *sound = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:(NSError **)&err];
-
-	if(err != nil)
-		NSLog(@"%@",[err description]);
-	[sound performSelectorInBackground:@selector(play) withObject:nil];
-	[sound release];
-}
-
 -(void)showAlert
 {
 	CGRect frame = [_innerView bounds];
@@ -283,7 +265,7 @@
 
 -(void)show
 {
-	[self boing];
+	[PEUtils playSoundFromFile:@"boing"];
 	[self showAlert];
 }
 

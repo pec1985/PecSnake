@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B649ABD91568043800235A70 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B649ABD81568043800235A70 /* AudioToolbox.framework */; };
+		B649ABDF15680A3500235A70 /* PEUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B649ABDE15680A3500235A70 /* PEUtils.m */; };
+		B649ABE215681A4B00235A70 /* beep1.wav in Resources */ = {isa = PBXBuildFile; fileRef = B649ABE015681A4B00235A70 /* beep1.wav */; };
+		B649ABE515681E6B00235A70 /* beep2.wav in Resources */ = {isa = PBXBuildFile; fileRef = B649ABE415681E6B00235A70 /* beep2.wav */; };
 		B67A970A15524E4300EFCF45 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B67A970915524E4300EFCF45 /* UIKit.framework */; };
 		B67A970C15524E4300EFCF45 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B67A970B15524E4300EFCF45 /* Foundation.framework */; };
 		B67A970E15524E4300EFCF45 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B67A970D15524E4300EFCF45 /* CoreGraphics.framework */; };
@@ -30,10 +34,11 @@
 		B67A97681552DCBC00EFCF45 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B67A97671552DCBC00EFCF45 /* Default.png */; };
 		B67A976A1552DCC400EFCF45 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B67A97691552DCC400EFCF45 /* Default@2x.png */; };
 		B6A99442156081AA004576B8 /* PEScores.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A99441156081AA004576B8 /* PEScores.m */; };
+		B6B3BAAD15694EA200BED94D /* PECreditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B3BAAB15694EA200BED94D /* PECreditsViewController.m */; };
+		B6B3BAAE15694EA200BED94D /* PECreditsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6B3BAAC15694EA200BED94D /* PECreditsViewController.xib */; };
 		B6B9F7EE15541CFF007E2DAC /* PEScoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B9F7EC15541CFF007E2DAC /* PEScoreViewController.m */; };
 		B6B9F7EF15541CFF007E2DAC /* PEScoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B6B9F7ED15541CFF007E2DAC /* PEScoreViewController.xib */; };
 		B6B9F7F615558760007E2DAC /* PETableviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B6B9F7F515558760007E2DAC /* PETableviewCell.m */; };
-		B6C032601560BCD300704EF6 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6C0325F1560BCD300704EF6 /* AVFoundation.framework */; };
 		B6C0326D15615B0000704EF6 /* laser1.wav in Resources */ = {isa = PBXBuildFile; fileRef = B6C0326B15615B0000704EF6 /* laser1.wav */; };
 		B6C0326E15615B0000704EF6 /* laser2.wav in Resources */ = {isa = PBXBuildFile; fileRef = B6C0326C15615B0000704EF6 /* laser2.wav */; };
 		B6C0327015615F9700704EF6 /* boing.wav in Resources */ = {isa = PBXBuildFile; fileRef = B6C0326F15615F9700704EF6 /* boing.wav */; };
@@ -42,6 +47,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B649ABD81568043800235A70 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		B649ABDD15680A3500235A70 /* PEUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEUtils.h; sourceTree = "<group>"; };
+		B649ABDE15680A3500235A70 /* PEUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEUtils.m; sourceTree = "<group>"; };
+		B649ABE015681A4B00235A70 /* beep1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = beep1.wav; sourceTree = "<group>"; };
+		B649ABE415681E6B00235A70 /* beep2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = beep2.wav; sourceTree = "<group>"; };
 		B67A970515524E4300EFCF45 /* PecSnake.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PecSnake.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B67A970915524E4300EFCF45 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B67A970B15524E4300EFCF45 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -77,12 +87,14 @@
 		B67A97691552DCC400EFCF45 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		B6A99440156081AA004576B8 /* PEScores.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEScores.h; sourceTree = "<group>"; };
 		B6A99441156081AA004576B8 /* PEScores.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEScores.m; sourceTree = "<group>"; };
+		B6B3BAAA15694EA200BED94D /* PECreditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PECreditsViewController.h; sourceTree = "<group>"; };
+		B6B3BAAB15694EA200BED94D /* PECreditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PECreditsViewController.m; sourceTree = "<group>"; };
+		B6B3BAAC15694EA200BED94D /* PECreditsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PECreditsViewController.xib; sourceTree = "<group>"; };
 		B6B9F7EB15541CFF007E2DAC /* PEScoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PEScoreViewController.h; sourceTree = "<group>"; };
 		B6B9F7EC15541CFF007E2DAC /* PEScoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEScoreViewController.m; sourceTree = "<group>"; };
 		B6B9F7ED15541CFF007E2DAC /* PEScoreViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PEScoreViewController.xib; sourceTree = "<group>"; };
 		B6B9F7F415558760007E2DAC /* PETableviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PETableviewCell.h; sourceTree = "<group>"; };
 		B6B9F7F515558760007E2DAC /* PETableviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PETableviewCell.m; sourceTree = "<group>"; };
-		B6C0325F1560BCD300704EF6 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B6C0326B15615B0000704EF6 /* laser1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = laser1.wav; sourceTree = "<group>"; };
 		B6C0326C15615B0000704EF6 /* laser2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = laser2.wav; sourceTree = "<group>"; };
 		B6C0326F15615F9700704EF6 /* boing.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = boing.wav; sourceTree = "<group>"; };
@@ -97,7 +109,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6C032601560BCD300704EF6 /* AVFoundation.framework in Frameworks */,
+				B649ABD91568043800235A70 /* AudioToolbox.framework in Frameworks */,
 				B67A973715524FBA00EFCF45 /* QuartzCore.framework in Frameworks */,
 				B67A970A15524E4300EFCF45 /* UIKit.framework in Frameworks */,
 				B67A970C15524E4300EFCF45 /* Foundation.framework in Frameworks */,
@@ -132,7 +144,7 @@
 		B67A970815524E4300EFCF45 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B6C0325F1560BCD300704EF6 /* AVFoundation.framework */,
+				B649ABD81568043800235A70 /* AudioToolbox.framework */,
 				B67A973615524FBA00EFCF45 /* QuartzCore.framework */,
 				B67A970915524E4300EFCF45 /* UIKit.framework */,
 				B67A970B15524E4300EFCF45 /* Foundation.framework */,
@@ -144,7 +156,7 @@
 		B67A970F15524E4300EFCF45 /* PecSnake */ = {
 			isa = PBXGroup;
 			children = (
-				EB69BF3E15677FA0009A66C0 /* Count down */,
+				B6B3BAB315695BAF00BED94D /* Credits and Feedback */,
 				B69DD7CA1563577F00EA3304 /* Assets */,
 				B69DD7C91563577300EA3304 /* Utils */,
 				B69DD7C81563575800EA3304 /* Score List */,
@@ -172,6 +184,7 @@
 		B69DD7C51563569800EA3304 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				EB69BF3E15677FA0009A66C0 /* Count down */,
 				B6B9F7F415558760007E2DAC /* PETableviewCell.h */,
 				B6B9F7F515558760007E2DAC /* PETableviewCell.m */,
 				B67A972715524E8700EFCF45 /* PEButton.h */,
@@ -211,6 +224,8 @@
 			children = (
 				B67A97591552D0EA00EFCF45 /* TiWebColor.h */,
 				B67A975A1552D0EA00EFCF45 /* TiWebColor.m */,
+				B649ABDD15680A3500235A70 /* PEUtils.h */,
+				B649ABDE15680A3500235A70 /* PEUtils.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -218,6 +233,8 @@
 		B69DD7CA1563577F00EA3304 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				B649ABE415681E6B00235A70 /* beep2.wav */,
+				B649ABE015681A4B00235A70 /* beep1.wav */,
 				B6C0326F15615F9700704EF6 /* boing.wav */,
 				B6C0326B15615B0000704EF6 /* laser1.wav */,
 				B6C0326C15615B0000704EF6 /* laser2.wav */,
@@ -239,6 +256,16 @@
 				EB69BEF615662257009A66C0 /* PEWormController.m */,
 			);
 			name = "Game Room";
+			sourceTree = "<group>";
+		};
+		B6B3BAB315695BAF00BED94D /* Credits and Feedback */ = {
+			isa = PBXGroup;
+			children = (
+				B6B3BAAA15694EA200BED94D /* PECreditsViewController.h */,
+				B6B3BAAB15694EA200BED94D /* PECreditsViewController.m */,
+				B6B3BAAC15694EA200BED94D /* PECreditsViewController.xib */,
+			);
+			name = "Credits and Feedback";
 			sourceTree = "<group>";
 		};
 		EB69BF3E15677FA0009A66C0 /* Count down */ = {
@@ -315,6 +342,9 @@
 				B6C0326D15615B0000704EF6 /* laser1.wav in Resources */,
 				B6C0326E15615B0000704EF6 /* laser2.wav in Resources */,
 				B6C0327015615F9700704EF6 /* boing.wav in Resources */,
+				B649ABE215681A4B00235A70 /* beep1.wav in Resources */,
+				B649ABE515681E6B00235A70 /* beep2.wav in Resources */,
+				B6B3BAAE15694EA200BED94D /* PECreditsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +369,8 @@
 				B6A99442156081AA004576B8 /* PEScores.m in Sources */,
 				EB69BEF715662257009A66C0 /* PEWormController.m in Sources */,
 				EB69BF4115677FBD009A66C0 /* PECountDown.m in Sources */,
+				B649ABDF15680A3500235A70 /* PEUtils.m in Sources */,
+				B6B3BAAD15694EA200BED94D /* PECreditsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,7 +393,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Pedro Enrique (9AFY86RE7C)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -387,7 +419,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Pedro Enrique (9AFY86RE7C)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

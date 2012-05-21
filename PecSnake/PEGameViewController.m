@@ -7,8 +7,6 @@
 //
 
 #import "PEGameViewController.h"
-#import "TiWebColor.h"
-#import "PEScores.h"
 
 typedef enum {
 	WormDirectionLeft,
@@ -27,8 +25,6 @@ static NSString *PAUSE_EVENT = @"pause";
 @interface PEGameViewController ()
 {
 @private
-	AVAudioPlayer *sound1;
-	AVAudioPlayer *sound2;
 	WormDirection direction;
 	NSTimer *timer;
 	NSTimeInterval interVal;
@@ -60,40 +56,6 @@ static NSString *PAUSE_EVENT = @"pause";
 @synthesize gameRoom;
 @synthesize pause;
 @synthesize flashView;
-
--(void)playSound1
-{
-	if(sound1 == nil)
-	{
-		NSString *a = [[NSBundle mainBundle] pathForResource:@"laser1" ofType:@"wav"];
-		NSURL *url = [NSURL fileURLWithPath:a];
-		NSLog(@"%@", a);
-		NSError *err = nil;
-		sound1 = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:(NSError **)&err];
-		if(err != nil)
-		{
-			NSLog(@"%@",[err description]);
-		}
-	}
-	[sound1 performSelectorInBackground:@selector(play) withObject:nil];
-}
-
--(void)playSound2
-{
-	if(sound2 == nil)
-	{
-		NSString *a = [[NSBundle mainBundle] pathForResource:@"laser2" ofType:@"wav"];
-		NSURL *url = [NSURL fileURLWithPath:a];
-		NSLog(@"%@", url);
-		NSError *err = nil;
-		sound2 = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:(NSError **)&err];
-		if(err != nil)
-		{
-			NSLog(@"%@",[err description]);
-		}
-	}
-	[sound2 performSelectorInBackground:@selector(play) withObject:nil];
-}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -178,8 +140,6 @@ static NSString *PAUSE_EVENT = @"pause";
 	RELEASE_TO_NIL(pause)
 	RELEASE_TO_NIL(scoreView)
 	RELEASE_TO_NIL(flashView)
-	RELEASE_TO_NIL(sound1)
-	RELEASE_TO_NIL(sound2)
 	[super dealloc];
 }
 
@@ -415,7 +375,7 @@ static NSString *PAUSE_EVENT = @"pause";
 
 -(void)wormAteCandy
 {
-	[self playSound1];
+	[PEUtils playSoundFromFile:@"laser1"];
 	numberOfCandy ++;
 	[wormController addWormPiece];
 	[self updateScoreWithPoints: time];
@@ -425,7 +385,7 @@ static NSString *PAUSE_EVENT = @"pause";
 }
 -(void)wormAteExtraCandy
 {
-	[self playSound2];
+	[PEUtils playSoundFromFile:@"laser2"];
 	[extraCandy setHidden:YES];
 	[wormController setExtraCandyHidden:YES];
 	[self updateScoreWithPoints: time * 25];
@@ -443,6 +403,7 @@ static NSString *PAUSE_EVENT = @"pause";
 }
 -(void)wormCrahed
 {
+	AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
 	[self endGame];
 }
 
