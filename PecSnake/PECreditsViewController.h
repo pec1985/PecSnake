@@ -11,7 +11,9 @@
 
 @interface PECreditsViewController : UIViewController
 
-@property (retain, nonatomic) IBOutlet UITextView *textArea;
 @property (retain, nonatomic) IBOutlet PELabel *leftSideLabel;
 @property (retain, nonatomic) IBOutlet PELabel *rightSideLabel;
+@property (retain, nonatomic) IBOutlet PELabel *pec1985;
+@property (retain, nonatomic) IBOutlet PELabel *pecdev;
+@property (retain, nonatomic) IBOutlet PELabel *feedback;
 @end

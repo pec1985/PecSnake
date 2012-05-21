@@ -14,9 +14,11 @@
 @end
 
 @implementation PECreditsViewController
-@synthesize textArea;
 @synthesize leftSideLabel;
 @synthesize rightSideLabel;
+@synthesize pec1985;
+@synthesize pecdev;
+@synthesize feedback;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,6 +32,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+//	[pecdev setTextAlignment:UITextAlignmentRight];
+//	[pec1985 setTextAlignment:UITextAlignmentRight];
+	[pecdev setTextColor:[PEUtils webColor:@"#00CCFF"]];
+	[pec1985 setTextColor:[PEUtils webColor:@"#00CCFF"]];
+//	[feedback setTextAlignment:UITextAlignmentLeft]; 
 	
 	[leftSideLabel setTextAlignment:UITextAlignmentLeft];
 	[rightSideLabel setTextAlignment:UITextAlignmentRight];
@@ -58,19 +65,16 @@
 		@"\n\n"
 		@"@pecdev"	 
 	 ];
-	
-	[textArea setFont:[PEUtils awesomeFont]];
-	[textArea setEditable:NO];
-	[textArea setText:
-		@"feedback and contact:\n\tpecsnake@gmail.com\n"
-	 ];
+
 }
 
 - (void)viewDidUnload
 {
-	[self setTextArea:nil];
 	[self setLeftSideLabel:nil];
 	[self setRightSideLabel:nil];
+	[self setPec1985:nil];
+	[self setPecdev:nil];
+	[self setFeedback:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -86,10 +90,22 @@
 	[self dismissModalViewControllerAnimated:YES];
 }
 
+
+- (IBAction)pec1985Click:(id)sender
+{
+	[PEUtils openTwitterWithName:@"pec1985"];
+}
+- (IBAction)pecdevClick:(id)sender
+{
+	[PEUtils openTwitterWithName:@"pecdev"];
+}
+
 - (void)dealloc {
-	[textArea release];
 	[leftSideLabel release];
 	[rightSideLabel release];
+	[pec1985 release];
+	[pecdev release];
+	[feedback release];
 	[super dealloc];
 }
 @end

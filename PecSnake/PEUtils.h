@@ -8,11 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioServices.h>
+#import "TiWebColor.h"
 
 @interface PEUtils : NSObject
 
 
 +(void)playSoundFromFile:(NSString *)url;
 +(UIFont *)awesomeFont;
++(void)openTwitterWithName:(NSString *)twitterName;
++(UIColor *)webColor:(NSString *)color;
 
 @end

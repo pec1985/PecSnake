@@ -14,7 +14,6 @@
 #import "PEScores.h"
 #import "PELabel.h"
 #import "PEUtils.h"
-#import "TiWebColor.h"
 
 @interface PEGameViewController : UIViewController<PERetroAlertDelegate, PEWormControllerDelegate, PECountDownDelegate>
 {

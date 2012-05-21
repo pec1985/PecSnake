@@ -23,4 +23,21 @@
 {
 	return [UIFont fontWithName:@"DS-Digital" size:20];
 }
+
++(void)openTwitterWithName:(NSString *)twitterName
+{
+	NSURL *url = [NSURL URLWithString: [NSString stringWithFormat:@"twitter://user?screen_name=%@",twitterName]];
+	BOOL canOpenURL = [[UIApplication sharedApplication] canOpenURL: url];
+	
+	if (canOpenURL) {
+		[[UIApplication sharedApplication] openURL: url];
+	} else {
+		[[UIApplication sharedApplication] openURL:[NSURL URLWithString: [NSString stringWithFormat:@"http://twitter.com/%@",twitterName]]];
+	}	
+}
+
++(UIColor *)webColor:(NSString *)color
+{
+	return [TiWebColor webColorNamed:color];
+}
 @end

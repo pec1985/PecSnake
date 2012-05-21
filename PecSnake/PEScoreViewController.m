@@ -8,7 +8,7 @@
 
 #import "PEScoreViewController.h"
 #import "PETableviewCell.h"
-#import "TiWebColor.h"
+#import "PEUtils.h"
 
 @interface PEScoreViewController ()
 {
@@ -97,7 +97,7 @@
 		[score setText:@"score"];
 		[speed setText:@"speed"];
 		
-		UIColor *_color = [TiWebColor webColorNamed:@"#333"];
+		UIColor *_color = [PEUtils webColor:@"#333"];
 		[date setBackgroundColor:_color];
 		[score setBackgroundColor:_color];
 		[speed setBackgroundColor:_color];

@@ -7,14 +7,13 @@
 //
 
 #import "PEButton.h"
-#import "TiWebColor.h"
-
+#import "PEUtils.h"
 
 @implementation PEButton
 
 -(void)props
 {
-		[self setBackgroundColor:[TiWebColor webColorNamed:@"#333"]];
+		[self setBackgroundColor:[PEUtils webColor:@"#333"]];
 		[self setTextColor:[UIColor whiteColor]];
 		[self setFont:[UIFont fontWithName:@"DS-Digital" size:22]];
 		[self setTextAlignment:UITextAlignmentCenter];
@@ -65,7 +64,7 @@
 
 -(void)resetColor
 {
-	[self setBackgroundColor:[TiWebColor webColorNamed:@"#333"]];
+	[self setBackgroundColor:[PEUtils webColor:@"#333"]];
 }
 
 -(void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
@@ -89,7 +88,7 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	[super touchesBegan:touches withEvent:event];
-	[self setBackgroundColor:[TiWebColor webColorNamed:@"#666"]];
+	[self setBackgroundColor:[PEUtils webColor:@"#666"]];
 }
 
 @end

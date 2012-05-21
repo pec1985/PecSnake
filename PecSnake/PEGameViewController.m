@@ -78,13 +78,13 @@ static NSString *PAUSE_EVENT = @"pause";
 {
     [super viewWillAppear:animated];
 	finalScore = [[PEScores alloc] init];
-	[[self view] setBackgroundColor:[TiWebColor webColorNamed:@"#333"]];
+	[[self view] setBackgroundColor:[PEUtils webColor:@"#333"]];
 	[pause sizeToFit];
 	[scoreLabel setText:[NSString stringWithFormat:@"SCORE: 0    SPEED:  1"]];
 	[scoreLabel setTextAlignment:UITextAlignmentLeft];
-	[scoreView setBackgroundColor:[TiWebColor webColorNamed:@"#333"]];
-	[scoreLabel setBackgroundColor:[TiWebColor webColorNamed:@"#333"]];
-	[pause setBackgroundColor:[TiWebColor webColorNamed:@"#333"]];
+	[scoreView setBackgroundColor:[PEUtils webColor:@"#333"]];
+	[scoreLabel setBackgroundColor:[PEUtils webColor:@"#333"]];
+	[pause setBackgroundColor:[PEUtils webColor:@"#333"]];
 	
 	extraCandy = [self extraCandy];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pauseClicked:) name:PAUSE_EVENT object:nil];
