@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FlurryAnalytics.h"
 
 @interface PEAppDelegate : UIResponder <UIApplicationDelegate>
 

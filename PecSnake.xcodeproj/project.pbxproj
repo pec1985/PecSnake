@@ -44,6 +44,7 @@
 		B6C0327015615F9700704EF6 /* boing.wav in Resources */ = {isa = PBXBuildFile; fileRef = B6C0326F15615F9700704EF6 /* boing.wav */; };
 		EB69BEF715662257009A66C0 /* PEWormController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB69BEF615662257009A66C0 /* PEWormController.m */; };
 		EB69BF4115677FBD009A66C0 /* PECountDown.m in Sources */ = {isa = PBXBuildFile; fileRef = EB69BF4015677FBD009A66C0 /* PECountDown.m */; };
+		EB69BF4F1569D9B1009A66C0 /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EB69BF4E1569D969009A66C0 /* libFlurryAnalytics.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -102,6 +103,8 @@
 		EB69BEF615662257009A66C0 /* PEWormController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PEWormController.m; sourceTree = "<group>"; };
 		EB69BF3F15677FBD009A66C0 /* PECountDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PECountDown.h; sourceTree = "<group>"; };
 		EB69BF4015677FBD009A66C0 /* PECountDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PECountDown.m; sourceTree = "<group>"; };
+		EB69BF4D1569D969009A66C0 /* FlurryAnalytics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
+		EB69BF4E1569D969009A66C0 /* libFlurryAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAnalytics.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +117,7 @@
 				B67A970A15524E4300EFCF45 /* UIKit.framework in Frameworks */,
 				B67A970C15524E4300EFCF45 /* Foundation.framework in Frameworks */,
 				B67A970E15524E4300EFCF45 /* CoreGraphics.framework in Frameworks */,
+				EB69BF4F1569D9B1009A66C0 /* libFlurryAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +148,7 @@
 		B67A970815524E4300EFCF45 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EB69BF4C1569D969009A66C0 /* FlurryAnalytics */,
 				B649ABD81568043800235A70 /* AudioToolbox.framework */,
 				B67A973615524FBA00EFCF45 /* QuartzCore.framework */,
 				B67A970915524E4300EFCF45 /* UIKit.framework */,
@@ -275,6 +280,15 @@
 				EB69BF4015677FBD009A66C0 /* PECountDown.m */,
 			);
 			name = "Count down";
+			sourceTree = "<group>";
+		};
+		EB69BF4C1569D969009A66C0 /* FlurryAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				EB69BF4D1569D969009A66C0 /* FlurryAnalytics.h */,
+				EB69BF4E1569D969009A66C0 /* libFlurryAnalytics.a */,
+			);
+			path = FlurryAnalytics;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -410,6 +424,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "882CDAAA-9F74-4592-8C03-39EFE040C738";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -430,6 +445,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "882CDAAA-9F74-4592-8C03-39EFE040C738";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -438,10 +454,16 @@
 		B67A971E15524E4400EFCF45 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PecSnake/PecSnake-Prefix.pch";
 				INFOPLIST_FILE = "PecSnake/PecSnake-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/FlurryAnalytics\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -449,10 +471,16 @@
 		B67A971F15524E4400EFCF45 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PecSnake/PecSnake-Prefix.pch";
 				INFOPLIST_FILE = "PecSnake/PecSnake-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/FlurryAnalytics\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

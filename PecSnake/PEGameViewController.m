@@ -159,7 +159,7 @@ static NSString *PAUSE_EVENT = @"pause";
 -(void)endGame
 {
 	[timer invalidate];
-	retroAlert = [[PERetroAlert alloc] initWithTitle:@"game over" message:@"HA HA! Sucker!" buttonNames:[NSArray arrayWithObject:@"end"] inView:[self view]];
+	retroAlert = [[PERetroAlert alloc] initWithTitle:@"game over" message:@"sorry!" buttonNames:[NSArray arrayWithObject:@"end"] inView:[self view]];
 	[retroAlert setDelegate:self];
 	[retroAlert show];
 	isPaused = YES;	
@@ -176,6 +176,8 @@ static NSString *PAUSE_EVENT = @"pause";
 	NSString *dateString = [dateFormatter stringFromDate: localDate];
 	
 	NSDictionary *sc = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:[finalScore score]],@"score",[NSNumber numberWithInt:time],@"time", dateString, @"date", nil];
+	
+	//[FlurryAnalytics logEvent:@"Game_Over" withParameters:sc];
 	
 	[ar addObject:sc];
 	
