@@ -94,12 +94,12 @@
 - (IBAction)pec1985Click:(id)sender
 {
 	[PEUtils openTwitterWithName:@"pec1985"];
-	//[FlurryAnalytics logEvent:@"Clicked_on_pec1985"];
+	[FlurryAnalytics logEvent:@"Clicked_on_pec1985"];
 }
 - (IBAction)pecdevClick:(id)sender
 {
 	[PEUtils openTwitterWithName:@"pecdev"];
-	//[FlurryAnalytics logEvent:@"Clicked_on_pecdev"];
+	[FlurryAnalytics logEvent:@"Clicked_on_pecdev"];
 }
 
 - (void)dealloc {

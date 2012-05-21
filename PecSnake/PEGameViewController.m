@@ -127,7 +127,7 @@ static NSString *PAUSE_EVENT = @"pause";
 
 -(void)dealloc
 {
-	NSLog(@"dealloc");
+//	NSLog(@"dealloc");
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	RELEASE_TO_NIL(countDown);
@@ -177,7 +177,7 @@ static NSString *PAUSE_EVENT = @"pause";
 	
 	NSDictionary *sc = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:[finalScore score]],@"score",[NSNumber numberWithInt:time],@"time", dateString, @"date", nil];
 	
-	//[FlurryAnalytics logEvent:@"Game_Over" withParameters:sc];
+	[FlurryAnalytics logEvent:@"Game_Over" withParameters:sc];
 	
 	[ar addObject:sc];
 	
@@ -304,7 +304,7 @@ static NSString *PAUSE_EVENT = @"pause";
 		}
 	}
 	[[self candy] setCenter:center];
-	NSLog(@"%f",center.x);
+//	NSLog(@"%f",center.x);
 	[wormController setCandyCenter:center];
 	if(numberOfCandy == 5)
 	{
