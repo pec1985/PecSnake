@@ -84,11 +84,13 @@
 	if(CGPointEqualToPoint(candyCenter, [lastWorm center]))
 	{
 		[delegate wormAteCandy];
+		return;
 	}
 	
 	if(extraCandyHidden == NO && CGPointEqualToPoint(extraCandyCenter, [lastWorm center]))
 	{
 		[delegate wormAteExtraCandy];
+		return;
 	}
 }
 
