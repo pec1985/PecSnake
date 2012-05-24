@@ -45,6 +45,8 @@
 		EB69BEF715662257009A66C0 /* PEWormController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB69BEF615662257009A66C0 /* PEWormController.m */; };
 		EB69BF4115677FBD009A66C0 /* PECountDown.m in Sources */ = {isa = PBXBuildFile; fileRef = EB69BF4015677FBD009A66C0 /* PECountDown.m */; };
 		EB69BF4F1569D9B1009A66C0 /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EB69BF4E1569D969009A66C0 /* libFlurryAnalytics.a */; };
+		EB88899E156DCCC900F3D6A5 /* PETestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB88899C156DCCC900F3D6A5 /* PETestViewController.m */; };
+		EB88899F156DCCC900F3D6A5 /* PETestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB88899D156DCCC900F3D6A5 /* PETestViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,6 +107,9 @@
 		EB69BF4015677FBD009A66C0 /* PECountDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PECountDown.m; sourceTree = "<group>"; };
 		EB69BF4D1569D969009A66C0 /* FlurryAnalytics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
 		EB69BF4E1569D969009A66C0 /* libFlurryAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAnalytics.a; sourceTree = "<group>"; };
+		EB88899B156DCCC900F3D6A5 /* PETestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PETestViewController.h; sourceTree = "<group>"; };
+		EB88899C156DCCC900F3D6A5 /* PETestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PETestViewController.m; sourceTree = "<group>"; };
+		EB88899D156DCCC900F3D6A5 /* PETestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PETestViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +166,7 @@
 		B67A970F15524E4300EFCF45 /* PecSnake */ = {
 			isa = PBXGroup;
 			children = (
+				EB8889A1156DD74000F3D6A5 /* Swipe Test View Controller */,
 				B6B3BAB315695BAF00BED94D /* Credits and Feedback */,
 				B69DD7CA1563577F00EA3304 /* Assets */,
 				B69DD7C91563577300EA3304 /* Utils */,
@@ -291,6 +297,16 @@
 			path = FlurryAnalytics;
 			sourceTree = "<group>";
 		};
+		EB8889A1156DD74000F3D6A5 /* Swipe Test View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EB88899B156DCCC900F3D6A5 /* PETestViewController.h */,
+				EB88899C156DCCC900F3D6A5 /* PETestViewController.m */,
+				EB88899D156DCCC900F3D6A5 /* PETestViewController.xib */,
+			);
+			name = "Swipe Test View Controller";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -359,6 +375,7 @@
 				B649ABE215681A4B00235A70 /* beep1.wav in Resources */,
 				B649ABE515681E6B00235A70 /* beep2.wav in Resources */,
 				B6B3BAAE15694EA200BED94D /* PECreditsViewController.xib in Resources */,
+				EB88899F156DCCC900F3D6A5 /* PETestViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,6 +402,7 @@
 				EB69BF4115677FBD009A66C0 /* PECountDown.m in Sources */,
 				B649ABDF15680A3500235A70 /* PEUtils.m in Sources */,
 				B6B3BAAD15694EA200BED94D /* PECreditsViewController.m in Sources */,
+				EB88899E156DCCC900F3D6A5 /* PETestViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,7 +425,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -434,7 +452,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -454,7 +472,7 @@
 		B67A971E15524E4400EFCF45 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PecSnake/PecSnake-Prefix.pch";
 				INFOPLIST_FILE = "PecSnake/PecSnake-Info.plist";
@@ -471,7 +489,7 @@
 		B67A971F15524E4400EFCF45 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PecSnake/PecSnake-Prefix.pch";
 				INFOPLIST_FILE = "PecSnake/PecSnake-Info.plist";
