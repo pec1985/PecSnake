@@ -18,6 +18,7 @@ typedef enum {
 
 
 static NSString *PAUSE_EVENT = @"pause";
+static NSString *PAUSED_EVENT = @"paused";
 
 #define RELEASE_TO_NIL(x) { if (x!=nil) { [x release]; x = nil; } }
 
@@ -88,6 +89,7 @@ static NSString *PAUSE_EVENT = @"pause";
 	
 	extraCandy = [self extraCandy];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pauseClicked:) name:PAUSE_EVENT object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToBackground:) name:PAUSED_EVENT object:nil];
 	
 	wormController = [[PEWormController alloc] initWithParentView:gameRoom];
 	[wormController setDelegate:self];
@@ -130,7 +132,8 @@ static NSString *PAUSE_EVENT = @"pause";
 //	NSLog(@"dealloc");
 
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	RELEASE_TO_NIL(countDown);
+	[[UIApplication sharedApplication] cancelAllLocalNotifications];
+	RELEASE_TO_NIL(countDown)
 	RELEASE_TO_NIL(wormController)
 	RELEASE_TO_NIL(finalScore)
 	RELEASE_TO_NIL(extraCandy)	
@@ -359,6 +362,19 @@ static NSString *PAUSE_EVENT = @"pause";
 	[buttonNames release];
 	buttonNames = nil;
 	[timer invalidate];
+}
+
+-(void)goToBackground:(id)sender
+{
+	UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+    if (localNotif == nil)
+        return;
+    [localNotif setFireDate:[NSDate date]];
+	
+	[localNotif setAlertBody:@"Game Paused"];
+	
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
+	RELEASE_TO_NIL(localNotif);
 }
 
 #pragma mark - Alert Delegate
