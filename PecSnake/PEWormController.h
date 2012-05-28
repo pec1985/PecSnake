@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PESquareView.h"
+#import "PEUtils.h"
 
 @protocol PEWormControllerDelegate <NSObject>
 @required

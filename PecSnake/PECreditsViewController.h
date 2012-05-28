@@ -17,4 +17,5 @@
 @property (retain, nonatomic) IBOutlet PELabel *pec1985;
 @property (retain, nonatomic) IBOutlet PELabel *pecdev;
 @property (retain, nonatomic) IBOutlet PELabel *feedback;
+@property (retain, nonatomic) IBOutlet PELabel *titleLabel;
 @end

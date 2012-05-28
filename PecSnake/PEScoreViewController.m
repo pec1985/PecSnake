@@ -7,8 +7,6 @@
 //
 
 #import "PEScoreViewController.h"
-#import "PETableviewCell.h"
-#import "PEUtils.h"
 
 @interface PEScoreViewController ()
 {
@@ -19,6 +17,7 @@
 
 @implementation PEScoreViewController
 @synthesize table;
+@synthesize hightScores;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,20 +33,25 @@
 	[table setAllowsSelection:NO];
 	NSMutableArray *temp = [[[NSUserDefaults standardUserDefaults] objectForKey:@"game_scores"] mutableCopy];	
 	NSSortDescriptor *mySorter = [[NSSortDescriptor alloc] initWithKey:@"score" ascending:NO];
-	
 	[temp sortUsingDescriptors:[NSArray arrayWithObject:mySorter]];
-	
 	allData = [temp copy];
 	[[self table] setDataSource:self];
 	[[self table] setDelegate:self];
 	[[self table] reloadData];
 	[temp release];
 	[mySorter release];
+	
+	
+	UITapGestureRecognizer *closeView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeViewController:)];
+	[closeView setNumberOfTapsRequired:1];
+	[hightScores addGestureRecognizer:closeView];
+	[closeView release];
 }
 
 - (void)viewDidUnload
 {
 	[self setTable:nil];
+    [self setHightScores:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -149,6 +153,7 @@
 	[allData release];
 	[headerView release];
 	[table release];
+    [hightScores release];
 	[super dealloc];
 }
 @end

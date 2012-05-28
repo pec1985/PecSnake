@@ -1,0 +1,12 @@
+/* 
+  localized.strings
+  PecSnake
+
+  Created by Pedro Enrique on 5/28/12.
+  Copyright (c) 2012 Appcelerator. All rights reserved.
+*/
+
+"scores" = "puntuacion";
+"start game" = "comenzar";
+"new game" = "nueva partida";
+"are you ready" = "!¿estas listo?!";

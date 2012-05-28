@@ -7,7 +7,6 @@
 //
 
 #import "PEWormController.h"
-#import "PESquareView.h"
 
 #define RELEASE_TO_NIL(x) { if (x!=nil) { [x release]; x = nil; } }
 
@@ -48,7 +47,7 @@
 -(PESquareView *)newWormPiece
 {
 	PESquareView *a = [[PESquareView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
-	[a setBackgroundColor:[UIColor blueColor]];
+	[a setBackgroundColor:[UIColor brownColor]];
 	return a;
 }
 
@@ -70,9 +69,12 @@
 {
 	PESquareView *lastWorm = [array lastObject];
 	[lastWorm setCenter:pt];
+	[lastWorm setBackgroundColor:[UIColor brownColor]];
 	[array removeObject:lastWorm];
 	[array insertObject:lastWorm atIndex:0];
 	CGPoint point = [lastWorm center];
+	if([array count] > 1)
+		[(PESquareView*)[array objectAtIndex:1] setBackgroundColor:[UIColor blueColor]];
 	for(PESquareView *w in array)
 	{
 		if([lastWorm isEqual:w] == NO && CGPointEqualToPoint([w center], point))

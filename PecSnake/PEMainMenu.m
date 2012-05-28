@@ -12,6 +12,9 @@
 #import "PECreditsViewController.h"
 
 @implementation PEMainMenu
+@synthesize scoresButton;
+@synthesize creditsButton;
+@synthesize startGameButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,10 +38,32 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	
+	[startGameButton setText:NSLocalizedString(@"start game", nil)];
+	[scoresButton setText:NSLocalizedString(@"scores", nil)];
+	
+	UITapGestureRecognizer *_gameStart = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(startGame:)];
+	UITapGestureRecognizer *_gameCredits = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gameCredits:)];
+	UITapGestureRecognizer *_gameScores = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gameScores:)];
+	
+	[_gameStart setNumberOfTapsRequired:1];
+	[_gameCredits setNumberOfTapsRequired:1];
+	[_gameScores setNumberOfTapsRequired:1];
+	
+	[scoresButton addGestureRecognizer:_gameScores];
+	[creditsButton addGestureRecognizer:_gameCredits];
+	[startGameButton addGestureRecognizer:_gameStart];
+	
+	[_gameStart release];
+	[_gameScores release];
+	[_gameCredits release];
 }
 
 - (void)viewDidUnload
 {
+	[self setCreditsButton:nil];
+	[self setStartGameButton:nil];
+	[self setScoresButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -55,32 +80,31 @@
 	comingSoon = nil;
 }
 
-- (IBAction)startGame:(id)sender {
+- (void)startGame:(id)sender {
 	PEGameViewController *a = [[PEGameViewController alloc] init];
 	[a setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
 	[a startGame];
-//	[self presentModalViewController:a animated:NO];
-	[self presentViewController:a animated:YES completion:^{
-//		[a autorelease];
-	}];
+	[self presentModalViewController:a animated:YES];
 	[a release];
 }
-- (IBAction)gameCredits:(id)sender {
-//	comingSoon = [[PERetroAlert alloc] initWithTitle:@"coming soon" message:@"meh" buttonNames:[NSArray arrayWithObject:@"ok"] inView:[self view]];
-//	[comingSoon setDelegate:self];
-//	[comingSoon showWithNoSound];
+- (void)gameCredits:(id)sender {
 	PECreditsViewController *a = [[PECreditsViewController alloc] init];
 	[a setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
-	[self presentViewController:a animated:YES completion:nil];
+	[self presentModalViewController:a animated:YES];
 	[a release];
 
 }
-- (IBAction)gameScores:(id)sender {
+- (void)gameScores:(id)sender {
 	PEScoreViewController *a = [[PEScoreViewController alloc] init];
 	[a setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
-	[self presentViewController:a animated:YES completion:^{
-		[a autorelease];
-	}];
+	[self presentModalViewController:a animated:YES];
+	[a release];
 }
 
+- (void)dealloc {
+	[creditsButton release];
+	[startGameButton release];
+	[scoresButton release];
+	[super dealloc];
+}
 @end

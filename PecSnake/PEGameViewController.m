@@ -42,6 +42,8 @@ static NSString *PAUSED_EVENT = @"paused";
 	int currentScore;
 	int extraScore;
 	BOOL isPaused;
+	BOOL isCountingDown;
+	BOOL isFirstTime;
 }
 
 -(void)resetCandy;
@@ -69,6 +71,7 @@ static NSString *PAUSED_EVENT = @"paused";
 		currentScore = 0;
 		extraScore = 0;
 		isPaused = NO;
+		isFirstTime = YES;
     }
     return self;
 }
@@ -87,6 +90,27 @@ static NSString *PAUSED_EVENT = @"paused";
 	[scoreLabel setBackgroundColor:[PEUtils webColor:@"#333"]];
 	[pause setBackgroundColor:[PEUtils webColor:@"#333"]];
 	
+	UITapGestureRecognizer *_pauseClicked = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pauseClicked:)];
+	UISwipeGestureRecognizer *_downSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeDown:)];
+	UISwipeGestureRecognizer *_upSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeUp:)];
+	UISwipeGestureRecognizer *_leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
+	UISwipeGestureRecognizer *_rightSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight:)];
+
+	[_pauseClicked setNumberOfTapsRequired:1];
+	[_downSwipe setDirection:UISwipeGestureRecognizerDirectionDown];
+	[_upSwipe setDirection:UISwipeGestureRecognizerDirectionUp];
+	[_leftSwipe setDirection:UISwipeGestureRecognizerDirectionLeft];
+	[_rightSwipe setDirection:UISwipeGestureRecognizerDirectionRight];
+
+	[scoreView addGestureRecognizer: _pauseClicked];
+	[gameRoom setGestureRecognizers:[NSArray arrayWithObjects:_downSwipe,_upSwipe,_leftSwipe,_rightSwipe, nil]];
+	
+	RELEASE_TO_NIL(_pauseClicked);
+	RELEASE_TO_NIL(_downSwipe);
+	RELEASE_TO_NIL(_upSwipe);
+	RELEASE_TO_NIL(_leftSwipe);
+	RELEASE_TO_NIL(_rightSwipe);
+	
 	extraCandy = [self extraCandy];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pauseClicked:) name:PAUSE_EVENT object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(goToBackground:) name:PAUSED_EVENT object:nil];
@@ -101,12 +125,16 @@ static NSString *PAUSED_EVENT = @"paused";
 
 -(void)countDownDidFinish
 {
+	NSLog(@"end countdown");
+	isCountingDown = NO;
 	RELEASE_TO_NIL(countDown)
 	[self startTimer];
 }
 
 -(void)startCountDown
 {
+	NSLog(@"Start countdown");
+	isCountingDown = YES;
 	if(countDown == nil)
 	{
 		countDown = [[PECountDown alloc] initWithCountDown:3 inView:[self view]];
@@ -332,28 +360,29 @@ static NSString *PAUSED_EVENT = @"paused";
 
 #pragma mark - User Actions
 
-- (IBAction)swipeLeft:(id)sender {
+- (void)swipeLeft:(id)sender {
 	if(direction != WormDirectionRight)
 		direction = WormDirectionLeft;
 }
 
-- (IBAction)swipeRight:(id)sender {
+- (void)swipeRight:(id)sender {
 	if(direction != WormDirectionLeft)
 		direction = WormDirectionRight;
 }
-- (IBAction)swipeUp:(id)sender {
+- (void)swipeUp:(id)sender {
 	if(direction != WormDirectionBottom)
 		direction = WormDirectionTop;
 }
 
-- (IBAction)swipeDown:(id)sender {
+- (void)swipeDown:(id)sender {
 	if(direction != WormDirectionTop)
 		direction = WormDirectionBottom;
 }
 
--(IBAction)pauseClicked:(id)sender
+-(void)pauseClicked:(id)sender
 {
-	if(isPaused) return;
+	NSLog(@"isCountingDown %i",isCountingDown);
+	if(isPaused == YES || isCountingDown == YES) return;
 	isPaused = YES;	
 	NSArray *buttonNames = [[NSArray alloc] initWithObjects:@"continue", @"end", nil];
 	retroAlert = [[PERetroAlert alloc] initWithTitle:@"pause" message:@"game paused" buttonNames:buttonNames inView:[self view]];
@@ -366,17 +395,18 @@ static NSString *PAUSED_EVENT = @"paused";
 
 -(void)goToBackground:(id)sender
 {
-	UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-    if (localNotif == nil)
-        return;
-    [localNotif setFireDate:[NSDate date]];
-	
-	[localNotif setAlertBody:@"Game Paused"];
-	
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
-	RELEASE_TO_NIL(localNotif);
-}
+	if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"5.0"))
+	{
+		UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+		if (localNotif == nil)
+			return;
+		[localNotif setFireDate:[NSDate date]];
+		[localNotif setAlertBody:@"Game Paused"];
+		[[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
+		RELEASE_TO_NIL(localNotif);
 
+	}
+}
 #pragma mark - Alert Delegate
 
 -(void)retroAlertDidSelect:(NSString *)title
@@ -384,7 +414,15 @@ static NSString *PAUSED_EVENT = @"paused";
 	RELEASE_TO_NIL(retroAlert);
 	if([title isEqualToString:@"continue"] || [title isEqualToString:@"go"])
 	{
-		[self startCountDown];
+		if(isFirstTime == YES || time > 1)
+		{	
+			isFirstTime = NO;
+			[self startCountDown];
+		}
+		else
+		{
+			[self startTimer];
+		}
 	}
 	if([title isEqualToString:@"end"])
 		[self dismissModalViewControllerAnimated:YES];

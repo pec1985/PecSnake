@@ -19,6 +19,7 @@
 @synthesize pec1985;
 @synthesize pecdev;
 @synthesize feedback;
+@synthesize titleLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -32,11 +33,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//	[pecdev setTextAlignment:UITextAlignmentRight];
-//	[pec1985 setTextAlignment:UITextAlignmentRight];
 	[pecdev setTextColor:[PEUtils webColor:@"#00CCFF"]];
 	[pec1985 setTextColor:[PEUtils webColor:@"#00CCFF"]];
-//	[feedback setTextAlignment:UITextAlignmentLeft]; 
 	
 	[leftSideLabel setTextAlignment:UITextAlignmentLeft];
 	[rightSideLabel setTextAlignment:UITextAlignmentRight];
@@ -66,6 +64,22 @@
 		@"@pecdev"	 
 	 ];
 
+	UITapGestureRecognizer *closeView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeWindow:)];
+	UITapGestureRecognizer *openPec1985 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pec1985Click:)];
+	UITapGestureRecognizer *openPecDev = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pecdevClick:)];
+	
+	[closeView setNumberOfTapsRequired:1];
+	[openPecDev setNumberOfTapsRequired:1];
+	[openPec1985 setNumberOfTapsRequired:1];
+	
+	[pecdev addGestureRecognizer:openPecDev];
+	[pec1985 addGestureRecognizer:openPec1985];
+	[titleLabel addGestureRecognizer:closeView];
+	
+	[openPecDev release];
+	[openPec1985 release];
+	[closeView release];
+	
 }
 
 - (void)viewDidUnload
@@ -75,6 +89,7 @@
 	[self setPec1985:nil];
 	[self setPecdev:nil];
 	[self setFeedback:nil];
+	[self setTitleLabel:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -84,19 +99,19 @@
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-- (IBAction)closeWindow:(id)sender {
+- (void)closeWindow:(id)sender {
 //	[textArea selectAll];
 //	NSLog(@"%@", [textArea _showTextStyleOptions]);
 	[self dismissModalViewControllerAnimated:YES];
 }
 
 
-- (IBAction)pec1985Click:(id)sender
+- (void)pec1985Click:(id)sender
 {
 	[PEUtils openTwitterWithName:@"pec1985"];
 	[FlurryAnalytics logEvent:@"Clicked_on_pec1985"];
 }
-- (IBAction)pecdevClick:(id)sender
+- (void)pecdevClick:(id)sender
 {
 	[PEUtils openTwitterWithName:@"pecdev"];
 	[FlurryAnalytics logEvent:@"Clicked_on_pecdev"];
@@ -108,6 +123,7 @@
 	[pec1985 release];
 	[pecdev release];
 	[feedback release];
+	[titleLabel release];
 	[super dealloc];
 }
 @end

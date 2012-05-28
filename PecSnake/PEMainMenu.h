@@ -13,4 +13,7 @@
 {
 	PERetroAlert *comingSoon;
 }
+@property (retain, nonatomic) IBOutlet PEButton *scoresButton;
+@property (retain, nonatomic) IBOutlet PEButton *creditsButton;
+@property (retain, nonatomic) IBOutlet PEButton *startGameButton;
 @end

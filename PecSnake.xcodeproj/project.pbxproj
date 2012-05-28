@@ -14,13 +14,11 @@
 		B67A970A15524E4300EFCF45 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B67A970915524E4300EFCF45 /* UIKit.framework */; };
 		B67A970C15524E4300EFCF45 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B67A970B15524E4300EFCF45 /* Foundation.framework */; };
 		B67A970E15524E4300EFCF45 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B67A970D15524E4300EFCF45 /* CoreGraphics.framework */; };
-		B67A971415524E4400EFCF45 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B67A971215524E4400EFCF45 /* InfoPlist.strings */; };
 		B67A971615524E4400EFCF45 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B67A971515524E4400EFCF45 /* main.m */; };
 		B67A971A15524E4400EFCF45 /* PEAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B67A971915524E4400EFCF45 /* PEAppDelegate.m */; };
 		B67A972415524E7200EFCF45 /* DS-DIGII.TTF in Resources */ = {isa = PBXBuildFile; fileRef = B67A972315524E7200EFCF45 /* DS-DIGII.TTF */; };
 		B67A973015524F2200EFCF45 /* PEMainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B67A972115524E6700EFCF45 /* PEMainMenu.m */; };
 		B67A973115524F4A00EFCF45 /* PERetroAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = B67A972615524E7F00EFCF45 /* PERetroAlert.m */; };
-		B67A973215524F4D00EFCF45 /* PEGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B67A972E15524E8800EFCF45 /* PEGameViewController.m */; };
 		B67A973315524F5000EFCF45 /* PELabel.m in Sources */ = {isa = PBXBuildFile; fileRef = B67A972C15524E8800EFCF45 /* PELabel.m */; };
 		B67A973415524F5300EFCF45 /* PESquareView.m in Sources */ = {isa = PBXBuildFile; fileRef = B67A972A15524E8800EFCF45 /* PESquareView.m */; };
 		B67A973515524F5600EFCF45 /* PEButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B67A972815524E8700EFCF45 /* PEButton.m */; };
@@ -47,6 +45,8 @@
 		EB69BF4F1569D9B1009A66C0 /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EB69BF4E1569D969009A66C0 /* libFlurryAnalytics.a */; };
 		EB88899E156DCCC900F3D6A5 /* PETestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB88899C156DCCC900F3D6A5 /* PETestViewController.m */; };
 		EB88899F156DCCC900F3D6A5 /* PETestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EB88899D156DCCC900F3D6A5 /* PETestViewController.xib */; };
+		EB888A2D1573714300F3D6A5 /* PEGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EB888A1E15736F7100F3D6A5 /* PEGameViewController.m */; };
+		EB888A341573756200F3D6A5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = EB888A361573756200F3D6A5 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,10 +60,8 @@
 		B67A970B15524E4300EFCF45 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B67A970D15524E4300EFCF45 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B67A971115524E4300EFCF45 /* PecSnake-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PecSnake-Info.plist"; sourceTree = "<group>"; };
-		B67A971315524E4400EFCF45 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B67A971515524E4400EFCF45 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B67A971715524E4400EFCF45 /* PecSnake-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PecSnake-Prefix.pch"; sourceTree = "<group>"; };
-		B67A971815524E4400EFCF45 /* PEAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PEAppDelegate.h; sourceTree = "<group>"; };
 		B67A971915524E4400EFCF45 /* PEAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PEAppDelegate.m; sourceTree = "<group>"; };
 		B67A972015524E6700EFCF45 /* PEMainMenu.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PEMainMenu.h; sourceTree = "<group>"; };
 		B67A972115524E6700EFCF45 /* PEMainMenu.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PEMainMenu.m; sourceTree = "<group>"; };
@@ -77,8 +75,6 @@
 		B67A972A15524E8800EFCF45 /* PESquareView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PESquareView.m; sourceTree = "<group>"; };
 		B67A972B15524E8800EFCF45 /* PELabel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PELabel.h; sourceTree = "<group>"; };
 		B67A972C15524E8800EFCF45 /* PELabel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PELabel.m; sourceTree = "<group>"; };
-		B67A972D15524E8800EFCF45 /* PEGameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PEGameViewController.h; sourceTree = "<group>"; };
-		B67A972E15524E8800EFCF45 /* PEGameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PEGameViewController.m; sourceTree = "<group>"; };
 		B67A972F15524E8800EFCF45 /* PEGameViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PEGameViewController.xib; sourceTree = "<group>"; };
 		B67A973615524FBA00EFCF45 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B67A97591552D0EA00EFCF45 /* TiWebColor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TiWebColor.h; sourceTree = "<group>"; };
@@ -110,6 +106,11 @@
 		EB88899B156DCCC900F3D6A5 /* PETestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PETestViewController.h; sourceTree = "<group>"; };
 		EB88899C156DCCC900F3D6A5 /* PETestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PETestViewController.m; sourceTree = "<group>"; };
 		EB88899D156DCCC900F3D6A5 /* PETestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PETestViewController.xib; sourceTree = "<group>"; };
+		EB888A1C15736F4C00F3D6A5 /* PEAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PEAppDelegate.h; sourceTree = "<group>"; };
+		EB888A1D15736F7100F3D6A5 /* PEGameViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PEGameViewController.h; sourceTree = "<group>"; };
+		EB888A1E15736F7100F3D6A5 /* PEGameViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PEGameViewController.m; sourceTree = "<group>"; };
+		EB888A351573756200F3D6A5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		EB888A371573756A00F3D6A5 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,9 +175,10 @@
 				B69DD7C71563571900EA3304 /* Main Menu */,
 				B69DD7C51563569800EA3304 /* UI */,
 				B6A9943E15608184004576B8 /* Game Room */,
-				B67A971815524E4400EFCF45 /* PEAppDelegate.h */,
+				EB888A1C15736F4C00F3D6A5 /* PEAppDelegate.h */,
 				B67A971915524E4400EFCF45 /* PEAppDelegate.m */,
 				B67A971015524E4300EFCF45 /* Supporting Files */,
+				EB888A361573756200F3D6A5 /* Localizable.strings */,
 			);
 			path = PecSnake;
 			sourceTree = "<group>";
@@ -185,7 +187,6 @@
 			isa = PBXGroup;
 			children = (
 				B67A971115524E4300EFCF45 /* PecSnake-Info.plist */,
-				B67A971215524E4400EFCF45 /* InfoPlist.strings */,
 				B67A971515524E4400EFCF45 /* main.m */,
 				B67A971715524E4400EFCF45 /* PecSnake-Prefix.pch */,
 			);
@@ -258,10 +259,10 @@
 		B6A9943E15608184004576B8 /* Game Room */ = {
 			isa = PBXGroup;
 			children = (
+				EB888A1D15736F7100F3D6A5 /* PEGameViewController.h */,
+				EB888A1E15736F7100F3D6A5 /* PEGameViewController.m */,
 				B6A99440156081AA004576B8 /* PEScores.h */,
 				B6A99441156081AA004576B8 /* PEScores.m */,
-				B67A972D15524E8800EFCF45 /* PEGameViewController.h */,
-				B67A972E15524E8800EFCF45 /* PEGameViewController.m */,
 				B67A972F15524E8800EFCF45 /* PEGameViewController.xib */,
 				EB69BEF515662257009A66C0 /* PEWormController.h */,
 				EB69BEF615662257009A66C0 /* PEWormController.m */,
@@ -343,6 +344,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				es,
 			);
 			mainGroup = B67A96FA15524E4200EFCF45;
 			productRefGroup = B67A970615524E4300EFCF45 /* Products */;
@@ -359,7 +361,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B67A971415524E4400EFCF45 /* InfoPlist.strings in Resources */,
 				B67A972415524E7200EFCF45 /* DS-DIGII.TTF in Resources */,
 				B67A97381552503800EFCF45 /* PEMainMenu.xib in Resources */,
 				B67A97391552504300EFCF45 /* PEGameViewController.xib in Resources */,
@@ -376,6 +377,7 @@
 				B649ABE515681E6B00235A70 /* beep2.wav in Resources */,
 				B6B3BAAE15694EA200BED94D /* PECreditsViewController.xib in Resources */,
 				EB88899F156DCCC900F3D6A5 /* PETestViewController.xib in Resources */,
+				EB888A341573756200F3D6A5 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,7 +392,6 @@
 				B67A971A15524E4400EFCF45 /* PEAppDelegate.m in Sources */,
 				B67A973015524F2200EFCF45 /* PEMainMenu.m in Sources */,
 				B67A973115524F4A00EFCF45 /* PERetroAlert.m in Sources */,
-				B67A973215524F4D00EFCF45 /* PEGameViewController.m in Sources */,
 				B67A973315524F5000EFCF45 /* PELabel.m in Sources */,
 				B67A973415524F5300EFCF45 /* PESquareView.m in Sources */,
 				B67A973515524F5600EFCF45 /* PEButton.m in Sources */,
@@ -403,18 +404,20 @@
 				B649ABDF15680A3500235A70 /* PEUtils.m in Sources */,
 				B6B3BAAD15694EA200BED94D /* PECreditsViewController.m in Sources */,
 				EB88899E156DCCC900F3D6A5 /* PETestViewController.m in Sources */,
+				EB888A2D1573714300F3D6A5 /* PEGameViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		B67A971215524E4400EFCF45 /* InfoPlist.strings */ = {
+		EB888A361573756200F3D6A5 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B67A971315524E4400EFCF45 /* en */,
+				EB888A351573756200F3D6A5 /* en */,
+				EB888A371573756A00F3D6A5 /* es */,
 			);
-			name = InfoPlist.strings;
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -424,7 +427,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					armv6,
+					armv7,
+				);
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -440,7 +446,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "882CDAAA-9F74-4592-8C03-39EFE040C738";
 				SDKROOT = iphoneos;
@@ -451,7 +457,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = (
+					armv6,
+					armv7,
+				);
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
@@ -460,7 +469,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "882CDAAA-9F74-4592-8C03-39EFE040C738";
