@@ -109,12 +109,10 @@
 - (void)pec1985Click:(id)sender
 {
 	[PEUtils openTwitterWithName:@"pec1985"];
-	[FlurryAnalytics logEvent:@"Clicked_on_pec1985"];
 }
 - (void)pecdevClick:(id)sender
 {
 	[PEUtils openTwitterWithName:@"pecdev"];
-	[FlurryAnalytics logEvent:@"Clicked_on_pecdev"];
 }
 
 - (void)dealloc {

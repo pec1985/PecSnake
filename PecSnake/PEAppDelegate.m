@@ -23,7 +23,7 @@ static NSString *PAUSED_EVENT = @"paused";
 }
 
 void uncaughtExceptionHandler(NSException *exception) {    
-	[FlurryAnalytics logError:@"Uncaught" message:@"Crash!" exception:exception];
+
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -32,10 +32,6 @@ void uncaughtExceptionHandler(NSException *exception) {
 
 	NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);    // Normal launch stuff
 
-	[FlurryAnalytics setAppVersion:@"1.0"];
-//	[FlurryAnalytics startSession:@"L7LUHDDIRNCILSR7YALD"];
-//	[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"game_scores"];
-//  [[NSUserDefaults standardUserDefaults] synchronize];
 	[self setWindow: [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease]];
 	[[self window] setRootViewController:[[[PEMainMenu alloc] init] autorelease]];
     [self.window makeKeyAndVisible];

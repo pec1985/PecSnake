@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FlurryAnalytics.h"
 #import "PEWormController.h"
 #import "PESquareView.h"
 #import "PERetroAlert.h"

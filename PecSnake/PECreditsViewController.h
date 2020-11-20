@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "PELabel.h"
-#import "FlurryAnalytics.h"
 
 @interface PECreditsViewController : UIViewController
 

@@ -208,8 +208,6 @@ static NSString *PAUSED_EVENT = @"paused";
 	
 	NSDictionary *sc = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:[finalScore score]],@"score",[NSNumber numberWithInt:time],@"time", dateString, @"date", nil];
 	
-	[FlurryAnalytics logEvent:@"Game_Over" withParameters:sc];
-	
 	[ar addObject:sc];
 	
 	[urs setObject:ar forKey:@"game_scores"];
