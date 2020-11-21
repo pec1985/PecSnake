@@ -83,21 +83,24 @@
 - (void)startGame:(id)sender {
 	PEGameViewController *a = [[PEGameViewController alloc] init];
 	[a setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    [a setModalPresentationStyle:UIModalPresentationFullScreen];
 	[a startGame];
-	[self presentModalViewController:a animated:YES];
+    [self presentViewController:a animated:YES completion:nil];
 	[a release];
 }
 - (void)gameCredits:(id)sender {
 	PECreditsViewController *a = [[PECreditsViewController alloc] init];
 	[a setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
-	[self presentModalViewController:a animated:YES];
+    [a setModalPresentationStyle:UIModalPresentationFullScreen];
+    [self presentViewController:a animated:YES completion:nil];
 	[a release];
 
 }
 - (void)gameScores:(id)sender {
 	PEScoreViewController *a = [[PEScoreViewController alloc] init];
 	[a setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
-	[self presentModalViewController:a animated:YES];
+    [a setModalPresentationStyle:UIModalPresentationFullScreen];
+    [self presentViewController:a animated:YES completion:nil];
 	[a release];
 }
 
